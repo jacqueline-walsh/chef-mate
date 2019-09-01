@@ -29,4 +29,4 @@ def get_recipes():
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
              port=int(os.environ.get('PORT')))
-    app.run(debug=True)
+    # app.run(debug=True)
