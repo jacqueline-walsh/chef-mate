@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <header>
+    </header>
+    <h1>ChefMate</h1>
+    <div class="row">
+        {% for recipe in recipes %}
+            <h3>{{ recipe.recipe_name }}</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

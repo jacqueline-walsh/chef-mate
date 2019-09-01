@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url('https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/cooking-wallpaper.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;  
+}
+
+nav {
+  background-color: transparent;
+  box-shadow: none;
+}

@@ -9,6 +9,7 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    {% block css%}{% endblock %}
     <title>Document</title>
 </head>
 <body>
@@ -16,17 +17,19 @@
        <nav>
         <div class="nav-wrapper">
            <img src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate-logo.png" alt="chef-mate logo" class="logo">
-           <a href="{{ url_for('get_recipes') }}" class="brand-logo"> ChefMate</a>
+           <a href="{{ url_for('index') }}" class="brand-logo"> ChefMate</a>
            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
            <ul id="nav-mobile" class="right hide-on-med-and-down">
-             <li><a href="{{ url_for('get_recipes') }}">Home</a></li>
+              <li><a href="{{ url_for('index') }}">Home</a></li>
+             <li><a href="{{ url_for('get_recipes') }}">Recipes</a></li>
              <li><a href="">Add Recipe</a></li>
              <li><a href="">Categories</a></li>
              <li><a href="">New Category</a></li>
 
            </ul>
            <ul class="sidenav" id="mobile-demo">
-             <li><a href="{{ url_for('get_recipes') }}">Home</a></li>
+             <li><a href="{{ url_for('index') }}">Home</a></li>
+             <li><a href="{{ url_for('get_recipes') }}">Recipes</a></li>
              <li><a href="">Add Recipe</a></li>
              <li><a href="">Categories</a></li>
              <li><a href="">New Category</a></li>
