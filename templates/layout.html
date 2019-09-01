@@ -1,50 +1,162 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
-    {% block css%}{% endblock %}
-    <title>Document</title>
-</head>
-<body>
-    <header>
-       <nav>
-        <div class="nav-wrapper">
-           <img src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate-logo.png" alt="chef-mate logo" class="logo">
-           <a href="{{ url_for('index') }}" class="brand-logo"> ChefMate</a>
-           <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-           <ul id="nav-mobile" class="right hide-on-med-and-down">
-              <li><a href="{{ url_for('index') }}">Home</a></li>
-             <li><a href="{{ url_for('get_recipes') }}">Recipes</a></li>
-             <li><a href="">Add Recipe</a></li>
-             <li><a href="">Categories</a></li>
-             <li><a href="">New Category</a></li>
 
-           </ul>
-           <ul class="sidenav" id="mobile-demo">
-             <li><a href="{{ url_for('index') }}">Home</a></li>
-             <li><a href="{{ url_for('get_recipes') }}">Recipes</a></li>
-             <li><a href="">Add Recipe</a></li>
-             <li><a href="">Categories</a></li>
-             <li><a href="">New Category</a></li>
-          </ul>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="shortcut icon" href="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/favicon.ico" type="image/x-icon">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}"> {% block css%}{% endblock %}
+  <title>Document</title>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="nav-wrapper">
+        <img src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate-logo.png" alt="chef-mate logo" class="logo">
+        <a href="{{ url_for('index') }}" class="brand-logo"> ChefMate</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+          <i class="material-icons">menu</i>
+        </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li>
+            <a href="{{ url_for('index') }}">home</a>
+          </li>
+          <li>
+            <a href="{{ url_for('get_recipes') }}">recipes</a>
+          </li>
+          <!-- modal trigger for login in-->
+          <li>
+            <a href="#login-modal" class="modal-trigger">
+              <i class="material-icons left">person</i>login</a>
+          </li>
+          <li>
+            <a href="#register-modal" class="modal-trigger">
+              <i class="material-icons left">person_add</i>register</a>
+          </li>
+        </ul>
+        <ul class="sidenav" id="mobile-demo">
+          <li>
+            <a href="{{ url_for('index') }}">Home</a>
+          </li>
+          <li>
+            <a href="{{ url_for('get_recipes') }}">Recipes</a>
+          </li>
+          <li>
+            <a href="#login-modal" class="=modal-trigger">
+              <i class="material-icons left">person</i>login</a>
+          </li>
+          <li>
+            <a href="#register-modal">
+              <i class="material-icons left">person_add</i>register</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+    {% block content %} {% endblock %}
+  </div>
+  <footer>
+    <div class="copyright">&copy; 2019 design by Jacqueline Walsh for CI Project</div>
+    <hr/>
+    <div class="social-media">
+      <a href="#">
+        <i class="fa fa-facebook-square"></i>
+      </a>
+      <a href="#"></a>
+      <i class="fa fa-google-plus-square"></i>
+      </a>
+      <a href="#"></a>
+      <i class="fa fa-twitter-square"></i>
+      </a>
+      <a href="#"></a>
+      <i class="fa fa-instagram"></i>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Login Modal Structure -->
+  <div id="login-modal" class="modal">
+      <div class="modal-content">
+        <h4>Login</h4>
+        <div class="row">
+          <form class="col s12" action="" method="POST">
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="username" type="text" class="validate">
+                <label for="username">Username</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="password" type="password" class="validate">
+                <label for="password">Password</label>
+              </div>
+            </div>
+          </form>
         </div>
-      </nav>
-    </header>
-    <div class="container">
-        {% block content %}
-        {% endblock %}
+      </div>
+      <div class="modal-footer">
+        <a href="" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Login</a>
+      </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+  <!-- Signup Modal Structure -->
+  <div id="register-modal" class="modal">
+    <div class="modal-content">
+      <h4>Register</h4>
+      <div class="row">
+        <form class="col s12" action="" method="POST">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="first_name" type="text" class="validate">
+              <label for="first_name">First Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="last_name" type="text" class="validate">
+              <label for="last_name">Last Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="username" type="text" class="validate">
+              <label for="username">Username</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate">
+              <label for="password">Password</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-close waves-effect waves-green btn-flat">Close</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Register</a>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+  <script>
+    $(document).ready(function () {
+      $('.sidenav').sidenav();
+      $('.collapsible').collapsible();
+      $('.modal').modal();
+    });    
+  </script>
 </body>
+
 </html>

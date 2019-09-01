@@ -9,3 +9,28 @@ img.logo {
     margin-right: 15px;
     margin-left: 20px;
 }
+
+.custom-btn {
+    background-color: transparent;
+    border: none;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(20, 20, 20);
+    color: #fff;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+hr {
+    width: 50%;
+}
+
+.social-media {
+    font-size: 2em;
+    padding-left: 15px;
+}

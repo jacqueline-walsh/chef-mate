@@ -6,6 +6,8 @@ body {
 body {
   background-image: url('https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/cooking-wallpaper.jpg');
   background-repeat: no-repeat;
+  height: 100vh;
+  background-position: center bottom;
   background-size: cover;  
 }
 
