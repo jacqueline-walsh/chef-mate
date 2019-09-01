@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, url_for
-# import os
+import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import env as config
@@ -19,7 +19,7 @@ mongo = PyMongo(app)
 def index():
     return render_template('index.html')
 
-    
+
 @app.route('/get_recipes')
 def get_recipes():
     return render_template("get_recipes.html",
@@ -27,6 +27,6 @@ def get_recipes():
 
 
 if __name__ == '__main__':
-    # app.run(host=os.environ.get('IP'),
-    #          port=int(os.environ.get('PORT')))
+    app.run(host=os.environ.get('IP'),
+             port=int(os.environ.get('PORT')))
     app.run(debug=True)
