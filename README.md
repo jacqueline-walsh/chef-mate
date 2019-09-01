@@ -1,6 +1,6 @@
 # ChefMate - Recipe Manager
 
-      ![screenshot of home page](https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/mac-screen.jpg)
+![screenshot of home page](https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/mac-screen.jpg)
 
 This project is to provide a one stop shop for all your favourite recipes.  Users can experience a rich environment full of colourful imagery, list of ingredients to shop for and the method and know how to make that perfect meal.  As well as being able to store and organise your own special recipes, you can check out other inspirational ideas from others and rate to give feedback.  Search for a typical dish by country, allegens, etc... Visit the data section for a breakdown of recipes in the form of charts.  This is a app that you won't be able to live without!
 
