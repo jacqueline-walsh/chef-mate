@@ -2,8 +2,7 @@ from flask import Flask, render_template, redirect, request, url_for
 import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from env import* as config
-
+from env import * as config
 
 app = Flask(__name__)
 
