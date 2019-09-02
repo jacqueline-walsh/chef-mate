@@ -5,8 +5,8 @@
 .venv
 venv/
 ENV/
-env.py
-env.*
+secret.py
+secret.*
 
 # OS generated files #
 ######################
