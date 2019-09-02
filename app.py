@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 app.config['MONGO_DBNAME'] = 'chef_mateDB'
-MONGODB_URI = os.environ.get('MONGODB_URI')
+app.config['MONGO_URI'] = MONGO_URI
 
 
 mongo = PyMongo(app)
