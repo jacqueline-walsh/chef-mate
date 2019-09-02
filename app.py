@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 app = Flask(__name__)
 
 
-app.config['MONGO_DBNAME'] = 'chef_mateDB'
+app.config['MONGO_DBNAME'] = os.environ.get('chef_mateDB')
 app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 
 mongo = PyMongo(app)
