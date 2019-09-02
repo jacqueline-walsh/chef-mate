@@ -2,13 +2,12 @@ from flask import Flask, render_template, redirect, request, url_for
 import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from secret import MONGO_URI
 
 app = Flask(__name__)
 
 
 app.config['MONGO_DBNAME'] = 'chef_mateDB'
-app.config['MONGO_URI'] = MONGO_URI
+MONGODB_URI = os.environ.get('MONGODB_URI')
 
 
 mongo = PyMongo(app)
