@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+{% block login_signup_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login_signup.css')}}">
+{% endblock login_signup_css%}
+{% block content %}
+    <div class="content-section">
+        <form action="" method="POST">
+          {{ form.hidden_tag() }}
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Registration Form</legend>
+            <!-- firstname field -->
+            <div class="form-group">
+                {{ form.firstname.label(class="form-control-label") }}
+                {{ form.firstname(class="form-control form-control-lg") }}
+            </div>
+            <!-- lastname field -->
+            <div class="form-group">
+                {{ form.lastname.label(class="form-control-label") }}
+                {{ form.lastname(class="form-control form-control-lg") }}
+            </div>            
+            <!-- username field -->
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
+                {{ form.username(class="form-control form-control-lg") }}
+            </div>
+              <!-- email field -->
+            <div class="form-group">
+              {{ form.email.label(class="form-control-label") }}
+              {{ form.email(class="form-control form-control-lg") }}
+            </div>
+            <!-- password field -->
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {{ form.password(class="form-control form-control-lg") }}
+            </div>   
+            <!-- confirm password field -->
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-control-label") }}
+                {{ form.confirm_password(class="form-control form-control-lg") }}
+            </div>  
+            <!-- submit button -->
+            <div class="form-group">
+              {{ form.submit(class="btn btn-outline-info")}}
+            </div>    
+            <div class="border-top pt-3">
+              <small class="text-muted">
+                Already have an account? <a class="ml-2" href="{{ url_for('login') }}">Login</a>
+              </small>
+            </div>            
+          </fieldset>
+        </form>
+    </div>
+
+{% endblock content %}

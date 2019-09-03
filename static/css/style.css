@@ -1,6 +1,12 @@
 body {
     margin: 0;
     padding: 0;
+    margin-top: 7rem;
+}
+
+nav {
+    background-color:rgb(20, 20, 20);
+    box-shadow: 2px 2px 2px #666;;    
 }
 
 img.logo {
@@ -34,3 +40,13 @@ hr {
     font-size: 2em;
     padding-left: 15px;
 }
+
+.content-section {
+    background: #fafafa;
+    padding: 10px 20px;
+    border: 2px solid #dddddd;
+    border-radius: 3px;
+    margin-top: 200px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 2px 2px  #666;
+  }

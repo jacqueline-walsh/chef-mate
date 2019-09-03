@@ -9,58 +9,44 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="shortcut icon" href="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/favicon.ico" type="image/x-icon">
   <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}"> {% block css%}{% endblock %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}"> 
+  {% block home_css%}{% endblock home_css%}
+  {% block login_signup_css%}{% endblock login_signup_css%}
   <title>Document</title>
 </head>
 
 <body>
   <header>
-    <nav>
-      <div class="nav-wrapper">
-        <img src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate-logo.png" alt="chef-mate logo" class="logo">
-        <a href="{{ url_for('index') }}" class="brand-logo"> ChefMate</a>
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger">
-          <i class="material-icons">menu</i>
-        </a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li>
-            <a href="{{ url_for('index') }}">home</a>
-          </li>
-          <li>
-            <a href="{{ url_for('get_recipes') }}">recipes</a>
-          </li>
-          <!-- modal trigger for login in-->
-          <li>
-            <a href="#login-modal" class="modal-trigger">
-              <i class="material-icons left">person</i>login</a>
-          </li>
-          <li>
-            <a href="#register-modal" class="modal-trigger">
-              <i class="material-icons left">person_add</i>register</a>
-          </li>
-        </ul>
-        <ul class="sidenav" id="mobile-demo">
-          <li>
-            <a href="{{ url_for('index') }}">Home</a>
-          </li>
-          <li>
-            <a href="{{ url_for('get_recipes') }}">Recipes</a>
-          </li>
-          <li>
-            <a href="#login-modal" class="=modal-trigger">
-              <i class="material-icons left">person</i>login</a>
-          </li>
-          <li>
-            <a href="#register-modal">
-              <i class="material-icons left">person_add</i>register</a>
-          </li>
+    <!-- navigation-->
+    <nav class="navbar navbar-dark fixed-top navbar-expand-md">
+      <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span></button>
+
+      <a class="navbar-brand img-responsive" href="{{ url_for('index') }}"><img src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate-logo.png" alt="chef-mate logo" class="logo"> ChefMate</a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('recipes') }}">receipes</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">register</a></li>
         </ul>
       </div>
     </nav>
   </header>
   <div class="container">
-    {% block content %} {% endblock %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %} 
+    {% endblock content %}
   </div>
   <footer>
     <div class="copyright">&copy; 2019 design by Jacqueline Walsh for CI Project</div>
@@ -81,82 +67,9 @@
     </div>
   </footer>
 
-  <!-- Login Modal Structure -->
-  <div id="login-modal" class="modal">
-      <div class="modal-content">
-        <h4>Login</h4>
-        <div class="row">
-          <form class="col s12" action="" method="POST">
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="username" type="text" class="validate">
-                <label for="username">Username</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="password" type="password" class="validate">
-                <label for="password">Password</label>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="" class="modal-close waves-effect waves-green btn-flat">Close</a>
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Login</a>
-      </div>
-    </div>
-
-  <!-- Signup Modal Structure -->
-  <div id="register-modal" class="modal">
-    <div class="modal-content">
-      <h4>Register</h4>
-      <div class="row">
-        <form class="col s12" action="" method="POST">
-          <div class="row">
-            <div class="input-field col s6">
-              <input id="first_name" type="text" class="validate">
-              <label for="first_name">First Name</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="last_name" type="text" class="validate">
-              <label for="last_name">Last Name</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="username" type="text" class="validate">
-              <label for="username">Username</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="password" type="password" class="validate">
-              <label for="password">Password</label>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a href="" class="modal-close waves-effect waves-green btn-flat">Close</a>
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Register</a>
-    </div>
-  </div>
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="{{ url_for('static', filename='js/script.js')}}"></script>
-  <script>
-    $(document).ready(function () {
-      $('.sidenav').sidenav();
-      $('.collapsible').collapsible();
-      $('.modal').modal();
-    });    
-  </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 </html>

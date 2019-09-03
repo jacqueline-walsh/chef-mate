@@ -1,14 +1,18 @@
-from flask import Flask, render_template, redirect, request, url_for
-import os
+from flask import Flask, render_template, redirect, request, url_for, flash
+from forms import RegistrationForm, LoginForm
+# import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-# from secret import MONGO_URI
+
+
+import env as config
 
 app = Flask(__name__)
 
 
-app.config['MONGO_DBNAME'] = os.environ.get('chef_mateDB')
-app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
+app.config['MONGO_DBNAME'] = 'task_manager'
+app.config['MONGO_URI'] = config.MONGO_URI
+app.config['SECRET_KEY'] = config.SECRET_KEY
 
 mongo = PyMongo(app)
 
@@ -18,13 +22,33 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/get_recipes')
-def get_recipes():
-    return render_template("get_recipes.html",
+@app.route('/recipes')
+def recipes():
+    return render_template("recipes.html",
                            recipes=mongo.db.recipes.find())
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('index'))
+    return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  form = LoginForm()
+  if form.validate_on_submit():
+    if form.username.data == 'jacqann' and form.password.data == 'password':
+      flash('You have been logged in!', 'success')
+      return redirect(url_for('index'))
+    else:
+      flash('login Unsuccessful.  Please check username and password!', 'danger')
+  return render_template('login.html', title='Login', form=form)
 
 
 if __name__ == '__main__':
-    app.run(host=os.environ.get('IP'),
-             port=int(os.environ.get('PORT')))
-    # app.run(debug=True)
+    # app.run(host=os.environ.get('IP'),
+    #          port=int(os.environ.get('PORT')))
+    app.run(debug=True)
