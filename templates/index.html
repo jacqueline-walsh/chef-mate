@@ -1,7 +1,8 @@
 {% extends 'layout.html' %}
+<!-- block link for custom styling -->
 {% block home_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
 {% endblock home_css%}
+<!-- main content block -->
 {% block content %}
-    <section id="index-background" class="vh100 container-fluid"></section>
 {% endblock content %}

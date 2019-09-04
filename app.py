@@ -3,20 +3,18 @@ from forms import RegistrationForm, LoginForm
 # import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-
-
 import env as config
 
 app = Flask(__name__)
 
-
+# configuration of Database
 app.config['MONGO_DBNAME'] = 'task_manager'
 app.config['MONGO_URI'] = config.MONGO_URI
 app.config['SECRET_KEY'] = config.SECRET_KEY
 
 mongo = PyMongo(app)
 
-
+# routing for pages
 @app.route('/')
 def index():
     return render_template('index.html')

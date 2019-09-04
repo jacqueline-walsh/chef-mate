@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
+<!-- main content block -->
 {% block content %}
-    <header>
-    </header>
     <h1>ChefMate</h1>
     <div class="row">
+        <!-- loop to show all recipes in the database -->
         {% for recipe in recipes %}
             <h3>{{ recipe.recipe_name }}</h3>
         {% endfor %}

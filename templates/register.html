@@ -1,7 +1,9 @@
 {% extends 'layout.html' %}
+<!-- block link for custom styling -->
 {% block login_signup_css %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/login_signup.css')}}">
 {% endblock login_signup_css%}
+<!-- main content block -->
 {% block content %}
     <div class="content-section">
         <form action="" method="POST">
@@ -42,6 +44,7 @@
             <div class="form-group">
               {{ form.submit(class="btn btn-outline-info")}}
             </div>    
+            <!-- link to login page -->
             <div class="border-top pt-3">
               <small class="text-muted">
                 Already have an account? <a class="ml-2" href="{{ url_for('login') }}">Login</a>

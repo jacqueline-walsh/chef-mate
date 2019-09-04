@@ -1,3 +1,10 @@
+/** 
+author : Jacqueline Walsh
+project: project 3 - Centric Design for Code Institute
+
+This is the custom styling for the index page
+**/
+
 body {
   background-image: url('https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/cooking-wallpaper.jpg');
   background-repeat: no-repeat;

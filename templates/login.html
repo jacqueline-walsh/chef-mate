@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
+<!-- block link for custom styling -->
 {% block login_signup_css %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/login_signup.css')}}">
 {% endblock login_signup_css%}
+<!-- main content block -->
 {% block content %}
     <div class="content-section">
         <form method="POST" action="">
@@ -9,6 +11,7 @@
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Log In</legend>
                 <div class="form-group">
+                    <!-- username input field with validation checks -->
                     {{ form.username.label(class="form-control-label") }}
                     {% if form.username.errors %}
                         {{ form.username(class="form-control form-control-lg is-invalid") }}
@@ -22,6 +25,7 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
+                    <!-- password input field with validation checks -->
                     {{ form.password.label(class="form-control-label") }}
                     {% if form.password.errors %}
                         {{ form.password(class="form-control form-control-lg is-invalid") }}
@@ -34,17 +38,21 @@
                         {{ form.password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+                <!-- remember me check box -->
                 <div class="form-check">
                     {{ form.remember(class="form-check-input") }}
                     {{ form.remember.label(class="form-check-label") }}
                 </div>
             </fieldset>
+            <!-- submit button -->
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
+            <!-- forgot password link -->
             <small class="text-muted ml-2">
                 <a href="#">Forgot Password?</a>
             </small>
+            <!-- link to registration form -->
             <div class="border-top pt-3">
               <small class="text-muted">
                   Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
