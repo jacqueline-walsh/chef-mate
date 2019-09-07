@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+<!-- block link for custom styling -->
+{% block login_signup_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css')}}">
+{% endblock login_signup_css%}
+<!-- main content block -->
+{% block content %}
+  <div class="content-section">
+      <h3>Add Country of Dish</h3>
+      <div class="row">
+      <form action="{{ url_for('insert_cuisine')}}" method="POST" class="col">
+        <div class="row">
+            <div class="input-field col">
+                <label for="cuisine_country">Cuisine</label>              
+                <input id="cuisine_country" name="cuisine_country" type="text" class="validate form-control">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <button class="btn btn-danger" type="submit" name="action">Add Cuisine
+                <i class="fa fa-plus"></i>
+             </button>
+        </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

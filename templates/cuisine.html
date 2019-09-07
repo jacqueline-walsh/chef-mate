@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+<!-- block link for custom styling -->
+{% block login_signup_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css')}}">
+{% endblock login_signup_css%}
+<!-- main content block -->
+{% block content %}
+  <div class="content-section">
+      <h3>Country of Dish</h3>
+      <br>
+    {% for country in cuisine %}
+    <div class="row">
+      <div class="col-md-8">
+        <h5>{{ country.cuisine_country.capitalize() }}</h5>
+      </div> 
+      <div class="col-md-4 text-right">
+        <a href="{{url_for('edit_cuisine', cuisine_id=country._id)}}" class="btn btn-sm btn-primary">Edit</a> 
+        <a href="{{url_for('delete_cuisine', cuisine_id=country._id)}}" class="btn btn-sm btn-danger">Delete</a>
+      </div>
+    </div>
+    <hr/> 
+    {% endfor %}
+    <br>
+    <div class="row">
+        <a href="{{ url_for('add_cuisine')}}" class="btn btn-danger"><i class="fa fa-plus"></i> Add New Cusine</a>
+    </div>          
+  </div> 
+{% endblock content %}

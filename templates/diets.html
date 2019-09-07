@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+<!-- block link for custom styling -->
+{% block login_signup_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css')}}">
+{% endblock login_signup_css%}
+<!-- main content block -->
+{% block content %}
+  <div class="content-section">
+      <h3>Dietary List</h3>
+      <br>
+    {% for diet in diets %}
+    <div class="row">
+      <div class="col-md-8">
+        <h5>{{ diet.diet_name }}</h5>
+      </div> 
+      <div class="col-md-4 text-right">
+        <a href="{{url_for('edit_diet', diet_id=diet._id)}}" class="btn btn-sm btn-primary">Edit</a> 
+        <a href="{{url_for('delete_diet', diet_id=diet._id)}}" class="btn btn-sm btn-danger">Delete</a>
+      </div>
+    </div>
+    <hr/> 
+    {% endfor %}
+    <br>
+    <div class="row">
+        <a href="{{ url_for('add_diet')}}" class="btn btn-danger"><i class="fa fa-plus"></i> Add New Diet</a>
+    </div>          
+  </div> 
+{% endblock content %}

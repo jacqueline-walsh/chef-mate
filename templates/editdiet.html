@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+<!-- block link for custom styling -->
+{% block login_signup_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css')}}">
+{% endblock login_signup_css%}
+<!-- main content block -->
+{% block content %}
+  <div class="content-section">
+      <h3>Edit Dietary Type</h3>
+      <div class="row">
+      <form action="{{ url_for('update_diet', diet_id=diet._id)}}" method="POST" class="col">
+        <div class="row">
+            <div class="input-field col">
+              <label for="diet_name">Dietary Name</label>              
+              <input id="diet_name" name="diet_name" type="text" class="validate form-control" value="{{diet.diet_name}}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <button class="btn btn-danger" type="submit" name="action">Edit Diet <i class="fa fa-plus"></i>
+             </button>&nbsp;
+             <a href="{{ url_for('diets') }}" class="btn btn-dark" role="button" name="action">Cancel <i class="fa fa-times"></i></a>
+        </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
