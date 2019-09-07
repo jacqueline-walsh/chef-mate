@@ -11,14 +11,25 @@ body {
     margin-top: 7rem;
 }
 
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
 /* navigation */
-nav {
+nav  {
     background-color:rgb(20, 20, 20);
     box-shadow: 2px 2px 2px #666; 
 }
 
 .navbar {
+    font-family: "montserrat";
+    font-size: 20px;
     padding: 0;
+}
+
+.navbar-brand {
+    font-size: 35px;
 }
 
 nav li a {
@@ -30,8 +41,6 @@ nav li a {
     border: none;
     background: none;
     padding: 10px 20px;
-    font-size: 20px;
-    font-family: "montserrat";
     color: #ff0000;
     cursor: pointer;
     transition: 1.5s ease-in-out;
@@ -80,7 +89,128 @@ img.logo {
     border-color: #ff0000;
 }
 
-/* container for login and registration pages */
+/* ************* All Recipes Section ******************** */
+
+/* recipe border */
+.card {
+    border: none;
+}
+
+/* receipe image */
+.card-img-top {
+    border-radius: 15px;
+}
+
+.link-single-recipe:hover {
+    transform: scale(1.1);
+}
+
+/* ************* single Recipes Section ******************** */
+/* print recipe */
+@media print {
+    body {
+      margin: 0;
+      color: #000;
+      background-color: #fff;
+    }
+    nav {
+        display: none;
+    }
+    header {
+        display: none;
+    }
+    .no-print {
+        display: none;
+    }
+    footer {
+        display: none;
+    }
+  }
+
+.fa-globe, .fa-clock-o {
+    font-size: 1.3em;
+}
+
+.ratings {
+    border: 3px solid red;
+    border-radius: 20px;
+    padding: 10px;
+    width: 50%;
+    margin: auto;
+}
+
+span.ratings-value {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.fa-thumbs-up, .fa-thumbs-down {
+    font-size: 2em;
+}
+
+.fa-thumbs-up {
+    color: #0000ff;
+}
+
+.fa-thumbs-down {
+    color: #ff0000;
+}
+
+.list-ingredients-background {
+    background-image: url('https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/recipes/background-paper.png');
+    background-repeat: no-repeat;
+    background-size: auto cover;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    margin-top: -50px !important;
+}
+
+.list-ingredients-background > h3 {
+    margin-top: 120px;
+}
+
+ul.ingredient-list {
+    list-style-type: none;
+    padding-right: 40px;
+    padding-left: 40px;
+}
+
+.note-paper-lines {
+    width: 85%;
+}
+
+/* Receipe steps to follow  */
+p.step-block.clearfix {
+    margin-top: 30px;
+    margin-bottom: 40px;
+    display: flex;
+}
+
+span.step-text {
+    padding-left: 20px;
+}
+/* credit to: https://www.formget.com/css-hr/ */
+hr.hr-steps {
+    height: 30px;
+    width: 50%;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+    }
+    hr.hr-steps:before {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+    }
+
+/* ************* container for login and registration pages ***************** */
+
 .content-section {
     background: #fafafa;
     padding: 10px 20px;
@@ -93,7 +223,7 @@ img.logo {
 
 /* footer section */
   footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 100%;
     background-color: rgb(20, 20, 20);
@@ -108,6 +238,7 @@ img.logo {
     padding-left: 15px;
 }
 
-hr {
+.footer-hr {
     width: 50%;
+    border: .75px solid #ccc;
 }

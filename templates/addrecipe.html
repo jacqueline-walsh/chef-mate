@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+<!-- block link for custom styling -->
+{% block login_signup_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css')}}">
+{% endblock login_signup_css%}
+<!-- main content block -->
+{% block content %}
+<div class="content-section">
+    <form action="{{ url_for('insert_recipe') }}" method="POST"  class="col">
+        <fieldset class="form-group">
+          <legend class="border-bottom mb-4">Add Recipe</legend>
+          <!-- Recipe name -->
+          <div class="form-group">
+            <label for="recipe_title">Recipe Title</label>
+            <input id="recipe_title" name="recipe_title" type="text" class="form-control">
+          </div>
+          <!-- diet type select field -->
+          <div class="row">
+            <div class="col-md-6">
+              <label>Dietry Type</label>
+                <div class="form-group">
+                  <select id="diet" name="diet_name">
+                    <option value="" disabled selected>Choose type of diet</option>
+                      {% for diet in diets %}
+                        <option value="{{diet.diet_name}}">{{diet.diet_name}}</option>
+                      {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <!-- Country of Cuisine --> 
+              <div class="col-md-6">
+                <label>Cuisine</label>
+                <div class="form-group">
+                  <select id="cuisine" name="cuisine_country">
+                    <option value="" disabled selected>Choose country</option>
+                    {% for country in cuisine %}
+                      <option value="{{country.cuisine_country}}">{{country.cuisine_country.capitalize()}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>  
+            </div>
+            <!-- ingredients dynamic input field -->
+            <input type="hidden" name="count" value="1" />
+            <div class="form-group" id="fields">
+              <label class="form-label" for="field1">Ingredients</label>
+              <form class="input-append">
+
+                <div id="field" class="input-group">
+                  <input autocomplete="off" class="input col-11 form-control" id="field1" name="recipe_ingredients[]" type="text" placeholder="Add Ingredients"/> 
+                  <span class="input-group-append" style="width:0;"> 
+                    <button id="b1" class="btn btn-success add-more"  id="btnGroupAddon" type="button">+</button>
+                  </span>      
+                  <br/>              
+                </div>
+
+
+
+                <small>Press + to add another form field</small>
+              </form>
+            </div>
+            <!-- steps dynamic input field -->
+            <input type="hidden" name="count" value="1" />
+            <div class="form-group" id="fields">
+              <label class="form-label" for="field1">Step by Step Method</label>
+              <form class="input-append">
+
+                <div id="field" class="input-group">
+                  <input autocomplete="off" class="input col-11 form-control" id="field1" name="recipe_steps[]" type="text" placeholder="Add Steps"/> 
+                  <span class="input-group-append" style="width:0;"> 
+                    <button id="b1" class="btn btn-success add-more" type="button">+</button>
+                  <span class="input-group-append" style="width:0;"> 
+                </div>
+                <small>Press + to add another form field</small>
+              </form>
+            </div>
+            <!-- Prep Time -->
+            <div class="row">
+              <div class="col-md-6">  
+                <div class="form-group">
+                  <label for="recipe_prep">Preparation Time</label>
+                  <input id="recipe_prep" name="recipe_prep" type="number" placeholder="(mins)" class="form-control">
+                </div>
+              </div>
+            <!-- Cook Time -->   
+              <div class="col-md-6">   
+                <div class="form-group">
+                  <label for="recipe_cook">Cooking Time</label>
+                  <input id="recipe_cook" name="recipe_cook" type="number" placeholder="(mins)" class="form-control">
+
+                </div>
+              </div>
+            </div>
+            <!-- Recipe Credits -->   
+            <div class="row">  
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="recipe_credits">Credit</label>
+                  <input id="recipe_credits" name="recipe_credits" type="text" placeholder="username here!" class="form-control">
+                </div>
+              </div>
+              <!-- Recipe Credits -->      
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="recipe_image">Recipe Image</label>
+                  <input id="recipe_image" name="recipe_image" type="file" class="form-control">
+                </div>  
+              </div> 
+            </div>           
+            <div class="row">
+              <button class="btn btn-danger" type="submit" name="action">Add Recipe</button>
+            </div>
+      </fieldset>
+    </form>
+</div>
+{% endblock content %}

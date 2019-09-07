@@ -17,6 +17,8 @@
 </head>
 
 <body>
+  <div id="page-container">
+    <div id="content-wrap">
   <header>
     <!-- navigation-->
     <nav class="navbar navbar-dark fixed-top navbar-expand-md">
@@ -27,10 +29,12 @@
       <a class="navbar-brand img-responsive" href="{{ url_for('index') }}"><img src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate-logo.png" alt="chef-mate logo" class="logo"> ChefMate</a>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">home</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('recipes') }}">receipes</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">login</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">register</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}"><i class="fa fa-home"></i> home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('recipes') }}"><i class="fa fa-book"></i> recipes</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('add_recipe') }}"><i class="fa fa-plus"></i> add recipe</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}"><i class="fa fa-user"></i> login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}"><i class="fa fa-user-plus"></i> register</a></li>
+          <!-- <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-bar-chart"></i></a></li> -->
         </ul>
       </div>
     </nav>
@@ -54,7 +58,7 @@
   <!-- footer content -->
   <footer>
     <div class="copyright">&copy; 2019 design by Jacqueline Walsh for CI Project</div>
-    <hr/>
+    <hr class="footer-hr">
     <!-- social media dummy links -->
     <div class="social-media">
       <a href="#">
@@ -71,9 +75,12 @@
       </a>
     </div>
   </footer>
+</div>
+</div>
     <!-- cdn links to bootstrap javascript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
   </body>
 </html>

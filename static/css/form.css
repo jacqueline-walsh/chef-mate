@@ -8,7 +8,7 @@ This is the custom styling for the login and registration page
 body {
   background-image: url('https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/cooking-tools-background.png');
   background-color: rgba(255, 255, 255, 0.5);
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   height: 100vh;
   background-position: center bottom;
   background-size: cover;  

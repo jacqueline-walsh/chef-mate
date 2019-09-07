@@ -1,11 +1,25 @@
 {% extends 'layout.html' %}
 <!-- main content block -->
 {% block content %}
-    <h1>ChefMate</h1>
-    <div class="row">
-        <!-- loop to show all recipes in the database -->
+    <h1 class="mb-3">Recipes</h1>
+    <hr>
+    <form class="form-inline justify-content-end search-form my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success search-form my-sm-0" type="submit">Search</button>
+    </form>
+	<div class="row">
         {% for recipe in recipes %}
-            <h3>{{ recipe.recipe_name }}</h3>
+        <div class="card col-md-4 mt-4">
+            <div>
+                <a href="{{url_for('recipe', recipe_id=recipe._id)}}">
+                    <img class="card-img-top link-single-recipe" src="{{ recipe.recipe_image }}" alt="{{recipe.recipe_title}}">
+                </a>
+            </div>
+            <div class=text-center>
+                <h5 class="card-title mt-4">{{ recipe.recipe_title.capitalize() }}</h5>
+                <h6>{{ recipe.recipe_cuisine.capitalize() }}</h6>
+            </div>
+        </div>
         {% endfor %}
     </div>
-{% endblock %}
+{% endblock content %}
