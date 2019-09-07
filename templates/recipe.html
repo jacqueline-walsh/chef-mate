@@ -13,21 +13,19 @@
           <img class="card-img-top" src="{{ recipe.recipe_image }}" alt="{{recipe.recipe_title}}">
         </div>
       </div>
-      <!-- total cooking time - credits - ratings -->
+      <!-- prep / cooking time - credits - ratings -->
       <div class="card text-center col-md-6 mt-4">
-        <div>
-          <div class="no-print">
-            <h5> country</h5>
-            <i class="fa fa-globe"></i> {{ recipe.recipe_cuisine.capitalize() }}
-          </div>
-        </div><br><br>
+          <!--  CUISINE TO GO HERE -->
+        <br><br>
         <div>
           <!-- cooking time -->
             <h5>cooking time</h5>
               <i class="fa fa-clock-o"></i> prep time:  {{ recipe.recipe_prep }} mins<br>
               <i class="fa fa-clock-o"></i> cook time:  {{ recipe.recipe_cook }} mins
         </div>
-        <div><br><br>
+        <!--  DIETARY TYPE TO GO HERE -->
+        <div>
+        <br><br>
           <!-- credits -->
           <div class="no-print">
             <h5>credit</h5>
