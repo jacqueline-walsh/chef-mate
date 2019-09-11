@@ -6,7 +6,7 @@
 <!-- main content block -->
 {% block content %}
 <div class="content-section">
-    <form action="{{ url_for('insert_recipe') }}" method="POST"  class="col">
+    <form action="{{ url_for('insert_recipe') }}" method="POST" enctype="multipart/form-data" class="col">
         <fieldset class="form-group">
           <legend class="border-bottom mb-4">Add Recipe</legend>
           <!-- Recipe name -->
@@ -19,10 +19,10 @@
             <div class="col-md-6">
               <label>Dietry Type</label>
                 <div class="form-group">
-                  <select id="diet" name="diet_name">
+                  <select id="diet" name="recipe_diet">
                     <option value="" disabled selected>Choose type of diet</option>
                       {% for diet in diets %}
-                        <option value="{{diet.diet_name}}">{{diet.diet_name}}</option>
+                        <option value="{{diet.diet_name}}">{{ diet.diet_name }}</option>
                       {% endfor %}
                   </select>
                 </div>
@@ -32,10 +32,10 @@
               <div class="col-md-6">
                 <label>Cuisine</label>
                 <div class="form-group">
-                  <select id="cuisine" name="cuisine_country">
+                  <select id="cuisine" name="recipe_cuisine">
                     <option value="" disabled selected>Choose country</option>
                     {% for country in cuisine %}
-                      <option value="{{country.cuisine_country}}">{{country.cuisine_country.capitalize()}}</option>
+                      <option value="{{country.cuisine_country}}">{{ country.cuisine_country }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -47,7 +47,6 @@
             <div class="form-group" id="fields">
               <label class="form-label" for="field1">Ingredients</label>
               <form class="input-append">
-
                 <div id="field" class="input-group">
                   <input autocomplete="off" class="input col-11 form-control" id="field1" name="recipe_ingredients[]" type="text" placeholder="Add Ingredients"/> 
                   <span class="input-group-append" style="width:0;"> 
@@ -55,9 +54,6 @@
                   </span>      
                   <br/>              
                 </div>
-
-
-
                 <small>Press + to add another form field</small>
               </form>
             </div>
@@ -68,10 +64,10 @@
               <form class="input-append">
 
                 <div id="field" class="input-group">
-                  <input autocomplete="off" class="input col-11 form-control" id="field1" name="recipe_steps[]" type="text" placeholder="Add Steps"/> 
+                  <input autocomplete="off" class="input col-11 form-control" id="field2" name="recipe_steps[]" type="text" placeholder="Add Steps"/> 
                   <span class="input-group-append" style="width:0;"> 
                     <button id="b1" class="btn btn-success add-more" type="button">+</button>
-                  <span class="input-group-append" style="width:0;"> 
+                  </span>
                 </div>
                 <small>Press + to add another form field</small>
               </form>
@@ -98,14 +94,14 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="recipe_credits">Credit</label>
-                  <input id="recipe_credits" name="recipe_credits" type="text" placeholder="username here!" class="form-control">
+                  <input id="recipe_credits" name="recipe_credits" type="text" placeholder="username here!" class="form-control" value="">
                 </div>
               </div>
               <!-- Recipe Credits -->      
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="recipe_image">Recipe Image</label>
-                  <input id="recipe_image" name="recipe_image" type="file" class="form-control">
+                  <input id="recipe_image" name="recipe_image" type="url" placeholder="Image URL" class="form-control">
                 </div>  
               </div> 
             </div>           

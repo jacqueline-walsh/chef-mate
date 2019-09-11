@@ -15,24 +15,34 @@
       </div>
       <!-- prep / cooking time - credits - ratings -->
       <div class="card text-center col-md-6 mt-4">
-          <!--  CUISINE TO GO HERE -->
-        <br><br>
+        <div>
+          <!-- country of cuisine -->
+          <h5>cuisine</h5>
+          <i class="fa fa-globe"></i> {{ recipe.recipe_cuisine.capitalize() }}<br>
+        </div>
+        <br>
+        <div>
+          <!-- dietary -->
+          <h5>diet</h5>
+          <i class="fa fa-cutlery"></i> {{ recipe.recipe_diet }}<br>
+        </div>
+        <br>         
         <div>
           <!-- cooking time -->
-            <h5>cooking time</h5>
-              <i class="fa fa-clock-o"></i> prep time:  {{ recipe.recipe_prep }} mins<br>
-              <i class="fa fa-clock-o"></i> cook time:  {{ recipe.recipe_cook }} mins
+          <h5>cooking time</h5>
+          <i class="fa fa-clock-o"></i> prep time:  {{ recipe.recipe_prep }} mins<br>
+          <i class="fa fa-clock-o"></i> cook time:  {{ recipe.recipe_cook }} mins
         </div>
         <!--  DIETARY TYPE TO GO HERE -->
         <div>
-        <br><br>
+        <br>
           <!-- credits -->
           <div class="no-print">
             <h5>credit</h5>
               {{ recipe.recipe_credits }}
             </div>
         </div>
-        <div><br><br>
+        <div><br>
           <!-- ratings -->
           <div class="no-print">
             <h5>ratings</h5>

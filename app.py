@@ -1,18 +1,19 @@
-from flask import Flask, render_template, redirect, request, url_for, flash
-from forms import RegistrationForm, LoginForm
+from flask import Flask, render_template, redirect, request, url_for, flash, session
 # import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+import bcrypt
 import env as config
+
 
 app = Flask(__name__)
 
 # configuration of Database
-app.config['MONGO_DBNAME'] = 'chef_mateDB'
 app.config['MONGO_URI'] = config.MONGO_URI
 app.config['SECRET_KEY'] = config.SECRET_KEY
 
 mongo = PyMongo(app)
+
 
 # routing for pages
 '''
@@ -20,6 +21,8 @@ home page
 '''
 @app.route('/')
 def index():
+    if 'username' in session:
+        flash(f"You are logged in as {session['username']}", 'success')
     return render_template('index.html')
 
 
@@ -27,26 +30,43 @@ def index():
 Users / Log-in / Register
 """
 # Register
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['POST', 'GET'])
 def register():
-  form = RegistrationForm()
-  if form.validate_on_submit():
-      flash(f'Account created for {form.username.data}!', 'success')
-      return redirect(url_for('index'))
-  return render_template('register.html', title='Register', form=form)
+    if request.method == 'POST':
+        users = mongo.db.users 
+        existing_user = users.find_one({'username' : request.form['username']})    
+
+        if existing_user is None:
+            hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+            users.insert_one({
+                'firstname': request.form['firstname'],
+                'lastname': request.form['lastname'],    
+                'email': request.form['email'],                            
+                'username': request.form['username'],
+                'password': hashpass})
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
+        else:
+            flash(f"Sorry username, {request.form['username']} already exists", 'danger')
+
+    return render_template('register.html')
+
 
 # Login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-  form = LoginForm()
-  if form.validate_on_submit():
-    if form.username.data == 'jacqann' and form.password.data == 'password':
-      flash('You have been logged in!', 'success')
-      return redirect(url_for('index'))
-    else:
-      flash('login Unsuccessful.  Please check username and password!', 'danger')
-  return render_template('login.html', title='Login', form=form)
+    if request.method == 'POST': 
+        users = mongo.db.users
+        login_user = users.find_one({'username' : request.form['username']})
 
+        if login_user:
+            if bcrypt.hashpw(request.form['password'].encode('utf-8'), login_user['password']) == login_user['password']:
+                session['username'] = request.form['username']
+                return redirect(url_for('index'))
+        else:
+            flash(f"Sorry username or password invalid", 'danger')   
+
+    return render_template('login.html')
 
 '''
 receipes
@@ -72,8 +92,8 @@ def add_recipe():
 
 @app.route('/insert_recipe', methods=['POST'])
 def insert_recipe():
-    tasks =  mongo.db.recipes
-    tasks.insert_one(request.form.to_dict())
+    recipe =  mongo.db.recipes
+    recipe.insert_one(request.form.to_dict())
     return redirect(url_for('recipes'))
 
 
