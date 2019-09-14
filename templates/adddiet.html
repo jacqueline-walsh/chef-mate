@@ -6,7 +6,9 @@
 <!-- main content block -->
 {% block content %}
   <div class="content-section">
-      <h3>Add Dietary Type</h3>
+        <img class="chefmate-logo"src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate.png" alt="chef-mate-logo"/>
+        <h1 class="text-center border-bottom mb-4">Add Type of Diet</h1>
+        <br>
       <div class="row">
       <form action="{{ url_for('insert_diet')}}" method="POST" class="col">
         <div class="row">

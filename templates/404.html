@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css">    
+    <link rel="stylesheet" href="{{url_for('static', filename='css/error.css')}}" type="text/css">
+    <title>404 page not found | ChefMate</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row no-gutters">
+            <div id="error-section" class="col-12 text-center">
+                <img class="chefmate-logo"src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate.png" alt="chef-mate-logo"/>
+                <h1>404 - Page not found</h1>
+                <h2>Sorry this page does not exist!</h2>
+                <p>Try the links below</p>
+                <a href="{{ url_for('index') }}" class="btn btn-outline-danger btn-sm">Home</a>
+                <a href="{{ url_for('recipes') }}" class="btn btn-outline-danger btn-sm">Recipes</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

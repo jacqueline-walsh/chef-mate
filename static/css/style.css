@@ -109,8 +109,20 @@ img.logo {
     border-radius: 15px;
 }
 
+/* recipe image */
 .link-single-recipe:hover {
     transform: scale(1.1);
+}
+
+/* pagination */
+.fa-angle-left, .fa-angle-right {
+    font-size: 3em;
+    color: #666;
+    padding: 10px;
+}
+
+span.pagination-link {
+    color: #666;  
 }
 
 /* ************* single Recipes Section ******************** */

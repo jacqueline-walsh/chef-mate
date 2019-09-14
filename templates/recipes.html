@@ -22,4 +22,13 @@
         </div>
         {% endfor %}
     </div>
+	<hr>
+	<div class="row justify-content-around">
+	{% if offset > 0 %}
+		<a href="{{prev_url}}" style="text-decoration: none;"><i class="fa fa-angle-left mt-4"></i><span class="pagination-link">Previous</span></a>
+    {% endif %}
+	{% if limit + offset < recipe_count %}
+        <a href="{{next_url}}" style="text-decoration: none;"><span class="pagination-link">Next</span><i class="fa fa-angle-right mt-4"></i></a>
+    {% endif %}
+	</div>   
 {% endblock content %}

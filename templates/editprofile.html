@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+<!-- block link for custom styling -->
+{% block login_signup_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css')}}">
+{% endblock login_signup_css%}
+<!-- main content block -->
+{% block content %}
+  <div class="content-section">
+      <img class="chefmate-logo"src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate.png" alt="chef-mate-logo"/>
+      <h1 class="text-center border-bottom mb-4">Edit Profile</h1>
+      <br>
+      <div class="row">
+      <form action="{{url_for('update_profile',user_id=user._id)}}" method="POST" class="col">
+        <div class="row">
+            <div class="input-field col">
+              <label for="firstname">First Name</label>              
+              <input id="firstname" name="firstname" type="text" class="form-control" value="{{ user.firstname }}">
+              <label for="firstname">Last Name</label>                   
+              <input id="lastname" name="lastname" type="text" class="form-control" value="{{ user.lastname }}"> 
+              <label for="firstname">Username</label>     
+              <input id="username" name="username" type="text" class="form-control" value="{{ user.username }}"> 
+              <label for="firstname">Email</label>     
+              <input id="email" name="email" type="email" class="form-control" value="{{ user.email }}"> 
+              <label for="firstname">Password</label>            
+              <input id="password" name="password" type="password" class="form-control" value="{{ user.password }}">    
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <button class="btn btn-danger" type="submit" name="action">Edit Profile <i class="fa fa-user"></i>
+             </button>&nbsp;
+             <a href="{{ url_for('profile') }}" class="btn btn-dark" role="button" name="action">Cancel <i class="fa fa-times"></i></a>
+        </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

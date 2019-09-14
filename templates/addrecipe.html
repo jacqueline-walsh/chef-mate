@@ -6,9 +6,11 @@
 <!-- main content block -->
 {% block content %}
 <div class="content-section">
-    <form action="{{ url_for('insert_recipe') }}" method="POST" enctype="multipart/form-data" class="col">
+    <form action="{{ url_for('insert_recipe') }}" method="POST" enctype="multipart/form-data" class="col">      
         <fieldset class="form-group">
-          <legend class="border-bottom mb-4">Add Recipe</legend>
+            <img class="chefmate-logo"src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate.png" alt="chef-mate-logo"/>
+            <h1 class="text-center border-bottom mb-4">Add Recipe</h1>
+            <br>
           <!-- Recipe name -->
           <div class="form-group">
             <label for="recipe_title">Recipe Title</label>
