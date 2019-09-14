@@ -147,7 +147,7 @@ def recipes():
 
         return render_template("recipes.html", recipes=recipes, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset, user_id=user['_id'])
 
-    return render_template("recipes.html", result=recipes, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
+    return render_template("recipes.html", recipes=recipes, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset,)
 
 
 # get a single recipe
