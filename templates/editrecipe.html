@@ -6,10 +6,10 @@
 <!-- main content block -->
 {% block content %}
 <div class="content-section">
-    <form action="{{ url_for('insert_recipe') }}" method="POST" enctype="multipart/form-data" class="col">      
+    <form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" enctype="multipart/form-data" class="col">      
         <fieldset class="form-group">
             <img class="chefmate-logo"src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate.png" alt="chef-mate-logo"/>
-            <h1 class="text-center border-bottom mb-4">Add Recipe</h1>
+            <h1 class="text-center border-bottom mb-4">Edit Recipe</h1>
             <br>
           <!-- Recipe name -->
           <div class="form-group">
@@ -47,7 +47,7 @@
           <!-- Difficulty of dish -->
           <div class="row">
               <div class="col-md-6">
-                <h6>Difficulty of dish</h6>
+                <h6>Dietry Type</h6>
                   <div class="form-group">
                     <select id="difficulty" name="recipe_difficulty">
                       <option value="" disabled selected>Choose difficulty</option>
@@ -125,8 +125,10 @@
               </div> 
             </div>           
             <div class="row">
-              <button class="btn btn-danger" type="submit" name="action">Add Recipe</button>
+              <button class="btn btn-danger mr-2" type="submit" name="action">Edit Recipe</button>
+              <a href="{{ url_for('recipe', recipe_id=recipe._id) }}" class="btn btn-dark" role="button" name="action">Cancel <i class="fa fa-times"></i></a>
             </div>
+          </div>
       </fieldset>
     </form>
 </div>

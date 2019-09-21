@@ -14,6 +14,13 @@ app.config['SECRET_KEY'] = config.SECRET_KEY
 
 mongo = PyMongo(app)
 
+# collections from Database
+users_coll = mongo.db.users
+recipes_coll = mongo.db.recipes
+diets_coll = mongo.db.diets
+cuisine_coll = mongo.db.cuisine
+difficulty_coll = mongo.db.difficulty
+
 
 # routing for pages
 '''
@@ -32,18 +39,18 @@ Users / Log-in / Register
 # Register
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    if request.method == 'POST':
-        users = mongo.db.users 
-        existing_user = users.find_one({'username' : request.form['username']})    
+    if request.method == 'POST': 
+        existing_user = users_coll.find_one({'username' : request.form['username']})    
 
         if existing_user is None:
             hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
-            users.insert_one({
-                'firstname': request.form['firstname'],
-                'lastname': request.form['lastname'],    
+            users_coll.insert_one({
+                'firstname': request.form['firstname'].capitalize(),
+                'lastname': request.form['lastname'].capitalize(),    
                 'email': request.form['email'],                            
                 'username': request.form['username'],
-                'password': hashpass})
+                'password': hashpass,
+                'admin': False})
             session['username'] = request.form['username']
             return redirect(url_for('index'))
         else:
@@ -56,8 +63,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST': 
-        users = mongo.db.users
-        login_user = users.find_one({'username' : request.form['username']})
+        login_user = users_coll.find_one({'username' : request.form['username']})
 
         if login_user:
             if bcrypt.hashpw(request.form['password'].encode('utf-8'), login_user['password']) == login_user['password']:
@@ -82,7 +88,7 @@ def logout():
 @app.route('/profile')
 def profile():
     if 'username' in session:
-        user = mongo.db.users.find_one({"username": session['username']})
+        user = users_coll.find_one({"username": session['username']})
         return render_template("profile.html", user=user, user_id=user['_id'])     
     return redirect(url_for('index'))
 
@@ -90,18 +96,17 @@ def profile():
 #edit profile
 @app.route('/edit_profile/<user_id>')
 def edit_profile(user_id):
-    return render_template('editprofile.html', user=mongo.db.users.find_one(
-    {'_id': ObjectId(user_id)}))
+    return render_template('editprofile.html', user=users_coll.find_one({'_id': ObjectId(user_id)}))
 
 
 # update profile in db
 @app.route('/update_profile/<user_id>', methods=['POST'])
 def update_profile(user_id):
     hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
-    mongo.db.users.replace_one(
+    users_coll.replace_one(
         {'_id': ObjectId(user_id)},
-        {'firstname': request.form['firstname'],
-        'lastname': request.form['lastname'],
+        {'firstname': request.form['firstname'].capitalize(),
+        'lastname': request.form['lastname'].capitalize(),
         'username': request.form['username'],
         'email': request.form['email'],
         'password': hashpass})
@@ -112,7 +117,7 @@ def update_profile(user_id):
 # delete profile from db
 @app.route('/delete_profile/<user_id>')
 def delete_profile(user_id):
-    mongo.db.users.delete_one({"_id": ObjectId(user_id)})
+    users_coll.delete_one({"_id": ObjectId(user_id)})
     session.clear()
     flash(f'Your profile has now been deleted', 'success')
     return redirect(url_for('profile'))
@@ -124,9 +129,7 @@ Recipes
 # get all recipes
 @app.route('/recipes', methods=['GET'])
 def recipes():
-    recipe = mongo.db.recipes
-
-    recipes = mongo.db.recipes.find()
+    recipe = recipes_coll
 
     offset = int(request.args['offset'])
     limit = int(request.args['limit'])
@@ -143,33 +146,69 @@ def recipes():
     prev_url = '/recipes?limit=' + str(limit) + '&offset=' + str(offset - limit)  
 
     if 'username' in session:
-        user = mongo.db.users.find_one({"username": session['username']})
+        user = users_coll.find_one({"username": session['username']})
 
         return render_template("recipes.html", recipes=recipes, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset, user_id=user['_id'])
 
-    return render_template("recipes.html", recipes=recipes, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset,)
+    return render_template("recipes.html", recipes=recipes, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
 
 
 # get a single recipe
 @app.route('/recipe/<recipe_id>')
 def recipe(recipe_id):
-    return render_template("recipe.html", recipe=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)}))
+    recipe=recipes_coll.find_one({'_id': ObjectId(recipe_id)})
+    return render_template("recipe.html", recipe=recipe)
 
 # add recipe
 @app.route('/add_recipe')
 def add_recipe():
-    the_diet = mongo.db.diets.find()
-    the_cuisine = mongo.db.cuisine.find()
+    the_diet = diets_coll.find()
+    the_cuisine = cuisine_coll.find()
+    the_difficulty = difficulty_coll.find()
     return render_template('addrecipe.html',
-                           diets=the_diet, cuisine=the_cuisine)
+                           diets=the_diet, cuisine=the_cuisine, difficulty=the_difficulty)
 
 # insert recipe to db
 @app.route('/insert_recipe', methods=['POST'])
 def insert_recipe():
-    recipe =  mongo.db.recipes
+    recipe =  recipes_coll
     recipe.insert_one(request.form.to_dict())
-    return redirect(url_for('recipes'))
+    flash(f"Recipe added. Thank you!", 'success')
+    return redirect(url_for('recipes', limit=6, offset=0))
 
+
+# edit recipe
+@app.route('/edit_recipe/<recipe_id>')
+def edit_recipe(recipe_id):
+    return render_template('editrecipe.html', recipe=recipes_coll.find_one(
+    {'_id': ObjectId(recipe_id)}))
+
+# update recipe in db
+@app.route('/update_recipes/<recipe_id>', methods=['POST'])
+def update_recipe(recipe_id):
+    recipes_coll.replace_one(
+        {'_id': ObjectId(recipe_id)},
+        {'recipe_title': request.form.get('recipe_title')},
+        {'receipe_diet': request.form.get('recipe_diet')},
+        {'recipe_cuisine': request.form.get('recipe_cuisine')},
+        {'recipe_difficulty': request.form.get('recipe_difficulty')},     
+        {'recipe_servings': request.form.get('recipe_servings')},
+        {'recipe_ingredients': request.form.get('recipe_ingredients[]')},      
+        {'recipe_steps': request.form.get('recipe_steps[]')},
+        {'recipe_prep': request.form.get('recipe_prep')},              
+        {'recipe_cook': request.form.get('recipe_cook')},
+        {'recipe_credits': request.form.get('recipe_credits')},   
+        {'recipe_image': request.form.get('recipe_image')}                                
+        )
+    flash(f"Recipe has been updated. Thank you!", 'success')
+    return redirect(url_for('recipe'))
+
+# delete recipe in db
+@app.route('/delete_recipe/<recipe_id>')
+def delete_recipe(recipe_id):
+    recipes_coll.delete_one({"_id": ObjectId(recipe_id)})
+    flash(f"Recipe deleted", 'success')
+    return redirect(url_for('recipes', limit=6, offset=0))
 
 '''
 Diets
@@ -178,7 +217,7 @@ Diets
 # get all diets
 @app.route('/diets')
 def diets():
-    return render_template('diets.html', diets=mongo.db.diets.find())
+    return render_template('diets.html', diets=diets_coll.find())
 
 # add diet
 @app.route('/add_diet')
@@ -188,29 +227,32 @@ def add_diet():
 # insert diet to db
 @app.route('/insert_diet', methods=['POST'])
 def insert_diet():
-    diets = mongo.db.diets
-    diet_doc = {'diet_name': request.form.get('diet_name')}
+    diets = diets_coll
+    diet_doc = {'diet_name': request.form.get('diet_name').capitalize()}
     diets.insert_one(diet_doc)
+    flash(f"diet added. Thank you!", 'success')
     return redirect(url_for('diets'))
 
 # edit diet
 @app.route('/edit_diet/<diet_id>')
 def edit_diet(diet_id):
-    return render_template('editdiet.html', diet=mongo.db.diets.find_one(
+    return render_template('editdiet.html', diet=diets_coll.find_one(
     {'_id': ObjectId(diet_id)}))
 
 # update diet in db
 @app.route('/update_diet/<diet_id>', methods=['POST'])
 def update_diet(diet_id):
-    mongo.db.diets.replace_one(
+    diets_coll.replace_one(
         {'_id': ObjectId(diet_id)},
         {'diet_name': request.form.get('diet_name')})
+    flash(f"Diet has been updated. Thank you!", 'success')
     return redirect(url_for('diets'))
 
 # delete diet in db
 @app.route('/delete_diet/<diet_id>')
 def delete_diet(diet_id):
-    mongo.db.diets.delete_one({"_id": ObjectId(diet_id)})
+    diets_coll.delete_one({"_id": ObjectId(diet_id)})
+    flash(f"Diet deleted", 'success')
     return redirect(url_for('diets'))
 
 
@@ -221,7 +263,7 @@ Cuisine
 # get all cuisine
 @app.route('/cuisine')
 def cuisine():
-    return render_template('cuisine.html', cuisine=mongo.db.cuisine.find())
+    return render_template('cuisine.html', cuisine=cuisine_coll.find())
 
 # add cuisine
 @app.route('/add_cuisine')
@@ -232,37 +274,49 @@ def add_cuisine():
 # insert cuisine to db
 @app.route('/insert_cuisine', methods=['POST'])
 def insert_cuisine():
-    cuisine = mongo.db.cuisine
-    cuisine_doc = {'cuisine_country': request.form.get('cuisine_country')}
+    cuisine = cuisine_coll
+    cuisine_doc = {'cuisine_country': request.form.get('cuisine_country').capitalize()}
     cuisine.insert_one(cuisine_doc)
+    flash(f"Cuisine added. Thank you!", 'success')
     return redirect(url_for('cuisine'))
 
 
 # edit cuisine
 @app.route('/edit_cuisine/<cuisine_id>')
 def edit_cuisine(cuisine_id):
-    return render_template('editcuisine.html', cuisine=mongo.db.cuisine.find_one(
+    return render_template('editcuisine.html', cuisine=cuisine_coll.find_one(
     {'_id': ObjectId(cuisine_id)}))
 
 
 # update cuisine in db
 @app.route('/update_cuisine/<cuisine_id>', methods=['POST'])
 def update_cuisine(cuisine_id):
-    mongo.db.cuisine.replace_one(
+    cuisine_coll.replace_one(
         {'_id': ObjectId(cuisine_id)},
         {'cuisine_country': request.form.get('cuisine_country')})
+    flash(f"Cuisine has been updated. Thank you!", 'success')
     return redirect(url_for('cuisine'))
 
 
 # delete cuisine from db
 @app.route('/delete_cuisine/<cuisine_id>')
 def delete_cuisine(cuisine_id):
-    mongo.db.cuisine.delete_one({"_id": ObjectId(cuisine_id)})
+    cuisine_coll.delete_one({"_id": ObjectId(cuisine_id)})
+    flash(f"Cuisine Deleted. Thank you!", 'success')
     return redirect(url_for('cuisine'))
 
 
 '''
-Error pages
+Dashboard Page
+'''
+
+# dashboard for d3.js charts
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+'''
+Error page
 '''
 
 # 404 page

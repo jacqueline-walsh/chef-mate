@@ -2,7 +2,7 @@
 <!-- main content block -->
 {% block content %}
   <!-- recipe title -->
-  <h1 class="mb-3">{{ recipe.recipe_title}}</h1>
+  <h1 class="text-center mb-3">{{ recipe.recipe_title}}</h1>
   <hr>
   <button onclick="window.print()" class="btn btn-danger no-print">Print <i class="fa fa-print"></i></button> 
   <section class="section-one">
@@ -14,45 +14,59 @@
         </div>
       </div>
       <!-- prep / cooking time - credits - ratings -->
-      <div class="card text-center col-md-6 mt-4">
+      <div class="card text-center col-md-6">
         <div>
           <!-- country of cuisine -->
-          <h5>cuisine</h5>
-          <i class="fa fa-globe"></i> {{ recipe.recipe_cuisine.capitalize() }}<br>
+          <h4>cuisine</h4>
+          <i class="fa fa-globe pr-2 mb-t"></i> {{ recipe.recipe_cuisine }}<br>
         </div>
         <br>
         <div>
           <!-- dietary -->
-          <h5>diet</h5>
-          <i class="fa fa-cutlery"></i> {{ recipe.recipe_diet }}<br>
+          <h4>diet</h4>
+          <i class="fas fa-concierge-bell pr-2 mt-2"></i> {{ recipe.recipe_diet }}<br>
         </div>
         <br>         
         <div>
           <!-- cooking time -->
-          <h5>cooking time</h5>
-          <i class="fa fa-clock-o"></i> prep time:  {{ recipe.recipe_prep }} mins<br>
-          <i class="fa fa-clock-o"></i> cook time:  {{ recipe.recipe_cook }} mins
+          <h4>cooking time</h4>
+          <i class="fa fa-clock pr-2 mt-2"></i> prep time:  {{ recipe.recipe_prep }} mins
+          <i class="fa fa-clock pr-2 mt-2 ml-2"></i> cook time:  {{ recipe.recipe_cook }} mins
         </div>
-        <!--  DIETARY TYPE TO GO HERE -->
-        <div>
         <br>
+        <!-- Difficulty -->
+        <div class="row text-center">
+          <div class="col-md-6">
+            <i class="fas fa-balance-scale mr-2 pr-2"></i><strong> difficulty: </strong> {{ recipe.recipe_difficulty }} 
+          </div>
+          <div class="col-md-6">
+            <i class="fa fa-utensils mr-2 pr-2"></i><strong> servings: </strong> {{ recipe.recipe_servings }} 
+          </div>
+        </div>
+        <br>
+        <div>
           <!-- credits -->
           <div class="no-print">
-            <h5>credit</h5>
+            <h4>credit</h4>
               {{ recipe.recipe_credits }}
             </div>
         </div>
         <div><br>
           <!-- ratings -->
           <div class="no-print">
-            <h5>ratings</h5>
-            <div class="ratings">
-              <i class="fa fa-thumbs-up"></i><span class="ratings-value">893</span><i class="fa fa-thumbs-down"></i>
-            </div>
+            <h4 class="mb-4">ratings</h4>
+            <div class="rw-ui-container"></div>
+          </div>
         </div>
+        <br>
+        <!-- edit and delete recipe buttons -->
+        <div class="col-md-11 text-center">
+          <a href="{{url_for('edit_recipe', recipe_id=recipe._id)}}" class="btn btn-primary mr-2 pt-2">Edit</a> 
+          <a href="{{url_for('delete_recipe', recipe_id=recipe._id)}}" class="btn btn-danger">Delete</a>
         </div>
-      </div>   
+      </div>        
   </div>
+
 </section>
 <br>
 <hr>
@@ -60,7 +74,7 @@
   <div class="row">
     <!-- loop to display ingredients -->
     <div class="col-md-6 mt-4 list-ingredients-background">
-      <h3 class="text-center">Ingredients</h3>
+      <h3 class="ingredients-heading text-center mb-5">Ingredients</h3>
       {% for ingredients in recipe.recipe_ingredients %}
         <ul class="ingredient-list">
           <li class="ingredient-item">{{ ingredients }}</li>
@@ -81,12 +95,7 @@
   </div>
 </section>
 <hr>
-<section class="section-three no-print">
-  <!-- list of allergens and social sharing buttons -->
-  <div class="row">
-    <div>
-      <h4>This is for allergens and social sharing buttons</h4>
-    </div>
-  </div>
-</section>
+
 {% endblock content %}
+
+

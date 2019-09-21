@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
   <link rel="shortcut icon" href="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/favicon.ico" type="image/x-icon">
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}"> 
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">  
   {% block home_css%}{% endblock home_css%}
   {% block login_signup_css%}{% endblock login_signup_css%}
   <title>Document</title>
@@ -39,7 +39,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}"><i class="fa fa-user"></i> login</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}"><i class="fa fa-user-plus"></i> register</a></li>
           {% endif %}   
-          <!-- <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-bar-chart"></i></a></li> -->
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}"><i class="fa fa-chart-bar"></i></a></li>
         </ul>
       </div>
     </nav>
@@ -70,16 +70,16 @@
     <!-- social media dummy links -->
     <div class="social-media">
       <a href="#">
-        <i class="fa fa-facebook-square"></i>
+        <i class="fab fa-facebook-square"></i>
       </a>
       <a href="#"></a>
-      <i class="fa fa-google-plus-square"></i>
+      <i class="fab fa-google-plus-square"></i>
       </a>
       <a href="#"></a>
-      <i class="fa fa-twitter-square"></i>
+      <i class="fab fa-twitter-square"></i>
       </a>
       <a href="#"></a>
-      <i class="fa fa-instagram"></i>
+      <i class="fab fa-instagram"></i>
       </a>
     </div>
   </footer>
@@ -90,5 +90,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+
   </body>
 </html>
