@@ -12,7 +12,7 @@ $(document).ready(function () {
         e.preventDefault();
         if (x < max_ingredients) { //max input box allowed
             //text box increment
-            $(wrapper_ingredients).append('<div><input type="text" name="recipe_ingredient[]" id="recipe_ingredients" class="form-control mb-1" placeholder="Add Another Ingredient"/><a href="#" class="remove_ingredients btn btn-danger btn-sm"><i class="fa fa-trash"></i> remove</a></div>'); //add input box
+            $(wrapper_ingredients).append('<div><input type="text" name="recipe_ingredients" class="form-control mb-1" placeholder="Add Another Ingredient"/><a href="#" class="remove_ingredients btn btn-danger btn-sm"><i class="fa fa-trash"></i> remove</a></div>'); //add input box
             x++;
         }
         else {
@@ -39,9 +39,9 @@ $(document).ready(function () {
 
     $(add_steps_button).click(function (e) { //on add input button click
         e.preventDefault();
-        if (x < max_steps) { //max input box allowed
+        if (x < max_steps) { // max input box allowed
             //text box increment
-            $(wrapper_steps).append('<div><input type="text" name="recipe_steps[]" id="recipe_steps" class="form-control mb-1" placeholder="Add Another Step"/><a href="#" class="remove_steps btn btn-danger btn-sm"><i class="fa fa-trash"></i> remove</a></div>'); //add input box
+            $(wrapper_steps).append('<div><input type="text" name="recipe_steps" class="form-control mb-1" placeholder="Add Another Step"/><a href="#" class="remove_steps btn btn-danger btn-sm"><i class="fa fa-trash"></i> remove</a></div>'); //add input box
             x++;
         }
         else {
@@ -49,7 +49,7 @@ $(document).ready(function () {
         }
     });
 
-    $(wrapper_steps).on("click", ".remove_steps", function (e) { //user click on remove text
+    $(wrapper_steps).on("click", ".remove_steps", function (e) { // user click on remove text
 
         e.preventDefault();
         $(this).parent('div').remove();

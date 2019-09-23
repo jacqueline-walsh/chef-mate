@@ -51,6 +51,7 @@ nav  {
 }
 
 nav li a {
+    font-size: .95em;
     text-transform: uppercase;
 }
 

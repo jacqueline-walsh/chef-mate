@@ -33,13 +33,13 @@
           <li class="nav-item"><a class="nav-link" href="{{url_for('recipes', limit=6, offset=0)}}"><i class="fa fa-book"></i> recipes</a></li>
           {% if session.username %}
             <li class="nav-item"><a class="nav-link" href="{{ url_for('add_recipe') }}"><i class="fa fa-plus"></i> add recipe</a></li>	
-            <li class="nav-item"><a class="nav-link" href="{{url_for('profile')}}"><i class="fa fa-user-plus"></i> profile</a></li>     
+            <li class="nav-item"><a class="nav-link" href="{{url_for('profile') }}"><i class="fa fa-user-plus"></i> profile</a></li>     
             <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}"><i class="fa fa-user"></i> logout</a></li>
             {% else %}
             <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}"><i class="fa fa-user"></i> login</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}"><i class="fa fa-user-plus"></i> register</a></li>
-          {% endif %}   
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}"><i class="fa fa-chart-bar"></i></a></li>
+          {% endif %}      
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}"><i class="fa fa-chart-bar"></i></a></li>   
         </ul>
       </div>
     </nav>

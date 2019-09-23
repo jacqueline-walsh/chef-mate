@@ -73,7 +73,7 @@
                   <div class="input_ingredients_wrap">
                     <button class="add_ingredients_button btn btn-success btn-sm mb-2">+ Add more</button>
                     <div>
-                      <input type="text" name="recipe_ingredient[]" id="recipe_ingredients" class="form-control mb-1" placeholder="Add Ingredient">
+                      <input type="text" name="recipe_ingredients" class="form-control mb-1" placeholder="Add Ingredient">
                     </div>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
                   <div class="input_steps_wrap">
                     <button class="add_steps_button btn btn-success btn-sm mb-2">+ Add more</button>
                     <div>
-                      <input type="text" name="recipe_steps[]" id="recipe_steps" class="form-control mb-1" placeholder="Add Step">
+                      <input type="text" name="recipe_steps" class="form-control mb-1" placeholder="Add Step">
                     </div>
                   </div>
                 </div>
@@ -113,15 +113,17 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <h6>Credit</h6>
-                  <input id="recipe_credits" name="recipe_credits" type="text" placeholder="username here!" class="form-control" value="">
+                  {% if session.username  %}   
+                    <input id="recipe_credits" name="recipe_credits" type="text" class="form-control" value="{{ session.username }}">
+                  {% endif %}               
                 </div>
               </div>
               <!-- Recipe Credits -->      
               <div class="col-md-6">
                 <div class="form-group">
                   <h6>Recipe Image</h6>
-                  <input id="recipe_image" name="recipe_image" type="url" placeholder="Image URL" class="form-control">
-                </div>  
+                    <input name="recipe_image" type="url" class="form-control" placeholder="Image URL">
+                  </div>  
               </div> 
             </div>           
             <div class="row">
