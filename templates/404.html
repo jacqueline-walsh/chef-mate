@@ -20,7 +20,7 @@
                 <h2>Sorry this page does not exist!</h2>
                 <p>Try the links below</p>
                 <a href="{{ url_for('index') }}" class="btn btn-outline-danger btn-sm">Home</a>
-                <a href="{{ url_for('recipes') }}" class="btn btn-outline-danger btn-sm">Recipes</a>
+                <a href="{{ url_for('recipes', limit=6, offset=0) }}" class="btn btn-outline-danger btn-sm">Recipes</a>
             </div>
         </div>
     </div>

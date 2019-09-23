@@ -6,7 +6,7 @@
 <!-- main content block -->
 {% block content %}
 <div class="content-section">
-    <form action="{{ url_for('insert_recipe') }}" method="POST" enctype="multipart/form-data" class="col">      
+    <form action="{{ url_for('insert_recipe') }}" method="POST" class="col">      
         <fieldset class="form-group">
             <img class="chefmate-logo"src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate.png" alt="chef-mate-logo"/>
             <h1 class="text-center border-bottom mb-4">Add Recipe</h1>
@@ -14,34 +14,34 @@
           <!-- Recipe name -->
           <div class="form-group">
             <h6>Recipe Title</h6>
-            <input id="recipe_title" name="recipe_title" type="text" class="form-control">
+            <input id="recipe_title" name="recipe_title" type="text" class="form-control" required>
           </div>
           <!-- diet type select field -->
           <div class="row">
             <div class="col-md-6">
               <h6>Dietry Type</h6>
                 <div class="form-group">
-                  <select id="diet" name="recipe_diet">
+                  <select id="diet" name="recipe_diet" required>
                     <option value="" disabled selected>Choose type of diet</option>
                       {% for diet in diets %}
                         <option value="{{diet.diet_name}}">{{ diet.diet_name }}</option>
                       {% endfor %}
                   </select>
+                  <small><a href="{{url_for('diets')}}" class="ml-3">list or add dietary list</a></small>
                 </div>
-                </i><a href="{{url_for('diets')}}">list or add dietary list</a>   
               </div>
               <!-- Country of Cuisine --> 
               <div class="col-md-6">
                 <h6>Cuisine</h6>
                 <div class="form-group">
-                  <select id="cuisine" name="recipe_cuisine">
+                  <select id="cuisine" name="recipe_cuisine" required>
                     <option value="" disabled selected>Choose country</option>
                     {% for country in cuisine %}
                       <option value="{{country.cuisine_country}}">{{ country.cuisine_country }}</option>
                     {% endfor %}
                   </select>
-                </div>
-                <a href="{{url_for('cuisine')}}">list or add a country</a> 
+                  <small><a href="{{url_for('cuisine')}}" class="ml-3">list or add a country</a></small>
+                </div> 
               </div> 
             </div><br>
           <!-- Difficulty of dish -->
@@ -49,7 +49,7 @@
               <div class="col-md-6">
                 <h6>Difficulty of dish</h6>
                   <div class="form-group">
-                    <select id="difficulty" name="recipe_difficulty">
+                    <select id="difficulty" name="recipe_difficulty" required>
                       <option value="" disabled selected>Choose difficulty</option>
                         {% for diff in difficulty %}
                           <option value="{{diff.difficulty_level}}">{{ diff.difficulty_level }}</option>
@@ -61,7 +61,7 @@
               <div class="col-md-6">
                   <h6>Servings</h6>
                   <div class="form-group">
-                    <input type="number" name="recipe_servings" id="recipe_servings" class="form-control">
+                    <input type="number" name="recipe_servings" id="recipe_servings" class="form-control" required min=1>
                   </div> 
                 </div> 
               </div><br>            
@@ -73,7 +73,8 @@
                   <div class="input_ingredients_wrap">
                     <button class="add_ingredients_button btn btn-success btn-sm mb-2">+ Add more</button>
                     <div>
-                      <input type="text" name="recipe_ingredients" class="form-control mb-1" placeholder="Add Ingredient">
+                    <small>maximum number of ingredients 20</small>
+                      <input type="text" name="recipe_ingredients" class="form-control mb-1" placeholder="Add Ingredient" required>
                     </div>
                   </div>
                 </div>
@@ -85,7 +86,8 @@
                   <div class="input_steps_wrap">
                     <button class="add_steps_button btn btn-success btn-sm mb-2">+ Add more</button>
                     <div>
-                      <input type="text" name="recipe_steps" class="form-control mb-1" placeholder="Add Step">
+                    <small>maximum number of steps 10</small>
+                      <input type="text" name="recipe_steps" class="form-control mb-1" placeholder="Add Step" required>
                     </div>
                   </div>
                 </div>
@@ -96,14 +98,14 @@
               <div class="col-md-6">  
                 <div class="form-group">
                   <h6>Preparation Time</h6>
-                  <input id="recipe_prep" name="recipe_prep" type="number" placeholder="(mins)" class="form-control">
+                  <input id="recipe_prep" name="recipe_prep" type="number" placeholder="(mins)" class="form-control" required min=1>
                 </div>
               </div>
             <!-- Cook Time -->   
               <div class="col-md-6">   
                 <div class="form-group">
                   <h6>Cooking Time</h6>
-                  <input id="recipe_cook" name="recipe_cook" type="number" placeholder="(mins)" class="form-control">
+                  <input id="recipe_cook" name="recipe_cook" type="number" placeholder="(mins)" class="form-control" required min=1>
 
                 </div>
               </div>

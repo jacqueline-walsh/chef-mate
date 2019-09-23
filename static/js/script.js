@@ -2,7 +2,7 @@
 additional dynamic text fields - ingredients
 */
 $(document).ready(function () {
-    var max_ingredients = 15; //maximum input boxes allowed
+    var max_ingredients = 20; //maximum input boxes allowed
     var wrapper_ingredients = $(".input_ingredients_wrap"); //Fields wrapper
     var add_ingredients_button = $(".add_ingredients_button"); //Add button ID
 

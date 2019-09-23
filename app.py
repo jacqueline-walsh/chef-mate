@@ -127,7 +127,7 @@ Recipes
 '''
 
 # get all recipes
-@app.route('/recipes', methods=['GET'])
+@app.route('/recipes')
 def recipes():
     recipe = recipes_coll
 
@@ -152,6 +152,14 @@ def recipes():
 
     return render_template("recipes.html", recipes=recipes, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
 
+
+# search recipes
+@app.route('/search')
+def search_recipes():
+    recipes_coll.create_index([( 'recipe_title', pymongo.TEXT )], name="text")
+    db_query = request.args['db_query']
+    recipes = recipes_coll.find({'$text': {'$search': db_query}}).limit(6)
+    return render_template("search.html", recipes=recipes)    
 
 # get a single recipe
 @app.route('/recipe/<recipe_id>')
@@ -224,6 +232,9 @@ def delete_recipe(recipe_id):
     recipes_coll.delete_one({"_id": ObjectId(recipe_id)})
     flash(f"Recipe deleted", 'success')
     return redirect(url_for('recipes', limit=6, offset=0))
+
+# search all recipes
+
 
 '''
 Diets
