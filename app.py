@@ -379,8 +379,9 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-    if app.run(host=os.environ.get('IP'),
-        port=os.environ.get('PORT'))
+    app.run(host=os.environ.get('IP'),
+            port=int(os.environ.get('PORT')),
+            debug=False)
 
         # Development only
         # app.run(host=os.environ.get('IP'),
