@@ -379,11 +379,10 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-    if os.environ.get("DEVELOPMENT"):
-        app.run(host=os.environ.get('IP'),
-                port=os.environ.get('PORT'),
-                debug=False)
-    else:
-        app.run(host=os.environ.get('IP'),
-                port=os.environ.get('PORT'),
-                debug=True)
+    if app.run(host=os.environ.get('IP'),
+        port=os.environ.get('PORT'))
+
+        # Development only
+        # app.run(host=os.environ.get('IP'),
+        #         port=os.environ.get('PORT'),
+        #         debug=True)
