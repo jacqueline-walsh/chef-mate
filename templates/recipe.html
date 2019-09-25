@@ -60,7 +60,7 @@
         </div>
         <br>
         <!-- edit and delete recipe buttons only used by admin -->
-        {% if session.username and session.username == 'admin' %}       
+        {% if session.username or session.username == 'admin' %}       
           <div class="col-md-11 text-center">
             <a href="{{url_for('edit_recipe', recipe_id=recipe._id)}}" class="btn btn-primary mr-2 pt-2">Edit</a> 
             <a href="{{url_for('delete_recipe', recipe_id=recipe._id)}}" class="btn btn-danger">Delete</a>

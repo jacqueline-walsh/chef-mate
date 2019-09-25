@@ -3,5 +3,5 @@
   "lastname" : "",
   "username" : "",
   "password" : "",
-  "admin" : true
+  "admin" : false
 }

@@ -216,30 +216,36 @@ def insert_recipe():
 # edit recipe
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
-    return render_template('editrecipe.html', recipe=recipes_coll.find_one(
-    {'_id': ObjectId(recipe_id)}))
+    recipe = recipes_coll.find_one({"_id": ObjectId(recipe_id)})
+    the_diet = diets_coll.find()
+    the_cuisine = cuisine_coll.find()
+    the_difficulty = difficulty_coll.find()
+    return render_template('editrecipe.html', recipe=recipe, diets=the_diet, cuisine=the_cuisine, difficulty=the_difficulty)
 
 # update recipe in db
 @app.route('/update_recipes/<recipe_id>', methods=['POST'])
 def update_recipe(recipe_id):
-    recipes_coll.replace_one(
-        {
-        "_id": ObjectId(recipe_id),            
-        "recipe_title" : request.form.get('recipe_title'),
-        "recipe_diet" : request.form.get('recipe_diet'),
-        "recipe_ingredients" : request.form.getlist('recipe_ingredients'),
-        "recipe_steps" : request.form.getlist('recipe_steps'),
-        "recipe_prep" : request.form.get('recipe_prep'),
-        "recipe_cook" : request.form.get('recipe_cook'),
-        "recipe_difficulty" : request.form.get('recipe_difficulty'),
-        "recipe_servings" : request.form.get('recipe_servings'),
-        "recipe_cuisine" : request.form.get('recipe_cuisine'),
-        "recipe_credits" : request.form.get('recipe_credits'),
-        "recipe_image" : request.form.get('recipe_image')
-        }            
+    recipes_coll.update_one(
+        {'_id': ObjectId(recipe_id)},
+        {'$set':
+            {           
+            "recipe_title" : request.form.get('recipe_title'),
+            "recipe_diet" : request.form.get('recipe_diet'),
+            "recipe_ingredients" : request.form.getlist('recipe_ingredients'),
+            "recipe_steps" : request.form.getlist('recipe_steps'),
+            "recipe_prep" : request.form.get('recipe_prep'),
+            "recipe_cook" : request.form.get('recipe_cook'),
+            "recipe_difficulty" : request.form.get('recipe_difficulty'),
+            "recipe_servings" : request.form.get('recipe_servings'),
+            "recipe_cuisine" : request.form.get('recipe_cuisine'),
+            "recipe_credits" : request.form.get('recipe_credits'),
+            "recipe_image" : request.form.get('recipe_image')
+            }
+        }
     )
+        
     flash(f"Recipe has been updated. Thank you!", 'success')
-    return redirect(url_for('recipe'))
+    return redirect(url_for('recipe', recipe_id=recipe_id))
 
 # delete recipe in db
 @app.route('/delete_recipe/<recipe_id>')

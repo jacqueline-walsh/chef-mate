@@ -41,7 +41,7 @@ $(document).ready(function () {
         e.preventDefault();
         if (x < max_steps) { // max input box allowed
             //text box increment
-            $(wrapper_steps).append('<div><input type="text" name="recipe_steps" class="form-control mb-1" placeholder="Add Another Step"/><a href="#" class="remove_steps btn btn-danger btn-sm"><i class="fa fa-trash"></i> remove</a></div>'); //add input box
+            $(wrapper_steps).append('<div><textarea name="recipe_steps" class="form-control mb-1" placeholder="Add Another Step"></textarea><a href="#" class="remove_steps btn btn-danger btn-sm"><i class="fa fa-trash"></i> remove</a></div>'); //add input box
             x++;
         }
         else {
@@ -73,6 +73,7 @@ function validate() {
         $("#validate-output").text("passwords do not match").css('color', 'red');
     }
 }
+
 
 // widget provided by https://rating-widget.com/get/rating/
 // Ratings

@@ -14,36 +14,45 @@
           <!-- Recipe name -->
           <div class="form-group">
             <h6>Recipe Title</h6>
-            <input id="recipe_title" name="recipe_title" type="text" class="form-control">
+            <input id="recipe_title" name="recipe_title" type="text" class="form-control" value="{{recipe.recipe_title}}">
           </div>
           <!-- diet type select field -->
           <div class="row">
-            <div class="col-md-6">
-              <h6>Dietry Type</h6>
-                <div class="form-group">
-                  <select id="diet" name="recipe_diet">
-                    <option value="" disabled selected>Choose type of diet</option>
-                      {% for diet in diets %}
-                        <option value="{{diet.diet_name}}">{{ diet.diet_name }}</option>
-                      {% endfor %}
-                  </select>
-                </div>
-                </i><a href="{{url_for('diets')}}">list or add dietary list</a>   
-              </div>
-              <!-- Country of Cuisine --> 
               <div class="col-md-6">
-                <h6>Cuisine</h6>
-                <div class="form-group">
-                  <select id="cuisine" name="recipe_cuisine">
-                    <option value="" disabled selected>Choose country</option>
-                    {% for country in cuisine %}
-                      <option value="{{country.cuisine_country}}">{{ country.cuisine_country }}</option>
-                    {% endfor %}
-                  </select>
+                <h6>Dietry Type</h6>
+                  <div class="form-group">
+                    <select id="diet" name="recipe_diet" required>
+                      <option value="" disabled selected>Choose type of diet</option>
+                        {% for diet in diets %}
+                          {% if diet.diet_name == recipe.recipe_diet %}
+                            <option selected value="{{diet.diet_name}}">{{ diet.diet_name }}</option>
+                          {% else %}
+                            <option value="{{diet.diet_name}}">{{ diet.diet_name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                    </select>
+                    <small><a href="{{url_for('diets')}}" class="ml-3">list or add dietary list</a></small>
+                  </div>
                 </div>
-                <a href="{{url_for('cuisine')}}">list or add a country</a> 
-              </div> 
-            </div><br>
+
+                <!-- Country of Cuisine --> 
+                <div class="col-md-6">
+                  <h6>Cuisine</h6>
+                  <div class="form-group">
+                    <select id="cuisine" name="recipe_cuisine" required>
+                      <option value="" disabled selected>Choose country</option>
+                      {% for country in cuisine %}
+                        {% if country.cuisine_country == recipe.recipe_cuisine%}
+                          <option selected value="{{country.cuisine_country}}">{{ country.cuisine_country }}</option>
+                        {% else %}
+                          <option value="{{country.cuisine_country}}">{{ country.cuisine_country }}</option> 
+                        {% endif %}                       
+                      {% endfor %}
+                    </select>
+                    <small><a href="{{url_for('cuisine')}}" class="ml-3">list or add a country</a></small>
+                  </div> 
+                </div> 
+              </div><br>
           <!-- Difficulty of dish -->
           <div class="row">
               <div class="col-md-6">
@@ -52,16 +61,20 @@
                     <select id="difficulty" name="recipe_difficulty">
                       <option value="" disabled selected>Choose difficulty</option>
                         {% for diff in difficulty %}
-                          <option value="{{diff.difficulty_level}}">{{ diff.difficulty_level }}</option>
+                          {% if diff.difficulty_level == recipe.recipe_difficulty %}
+                            <option selected value="{{diff.difficulty_level}}">{{ diff.difficulty_level }}</option>
+                          {% else %}
+                            <option value="{{diff.difficulty_level}}">{{ diff.difficulty_level }}</option>
+                          {% endif %}
                         {% endfor %}
                     </select>
                   </div>
               </div>           
-              <!-- Number of peple it serves --> 
+              <!-- Number of people it serves --> 
               <div class="col-md-6">
                   <h6>Servings</h6>
                   <div class="form-group">
-                    <input type="number" name="recipe_servings" id="recipe_servings" class="form-control">
+                    <input type="number" name="recipe_servings" id="recipe_servings" class="form-control" value="{{recipe.recipe_servings}}">
                   </div> 
                 </div> 
               </div><br>            
@@ -73,7 +86,9 @@
                   <div class="input_ingredients_wrap">
                     <button class="add_ingredients_button btn btn-success btn-sm mb-2">+ Add more</button>
                     <div>
-                      <input type="text" name="recipe_ingredient[]" id="recipe_ingredients" class="form-control mb-1" placeholder="Add Ingredient">
+                      {% for ingredient in recipe.recipe_ingredients %}
+                        <input type="text" name="recipe_ingredients" id="recipe_ingredients" class="form-control mb-1" placeholder="Add Ingredient" value="{{ingredient}}" />
+                      {% endfor %}
                     </div>
                   </div>
                 </div>
@@ -85,7 +100,9 @@
                   <div class="input_steps_wrap">
                     <button class="add_steps_button btn btn-success btn-sm mb-2">+ Add more</button>
                     <div>
-                      <input type="text" name="recipe_steps[]" id="recipe_steps" class="form-control mb-1" placeholder="Add Step">
+                      {% for step in recipe.recipe_steps %}                      
+                        <textarea name="recipe_steps" id="recipe_steps" class="form-control mb-1" placeholder="Add Step">{{ step }}</textarea>
+                      {% endfor %}                      
                     </div>
                   </div>
                 </div>
@@ -96,14 +113,14 @@
               <div class="col-md-6">  
                 <div class="form-group">
                   <h6>Preparation Time</h6>
-                  <input id="recipe_prep" name="recipe_prep" type="number" placeholder="(mins)" class="form-control">
+                  <input id="recipe_prep" name="recipe_prep" type="number" placeholder="(mins)" value="{{recipe.recipe_prep}}" class="form-control">
                 </div>
               </div>
             <!-- Cook Time -->   
               <div class="col-md-6">   
                 <div class="form-group">
                   <h6>Cooking Time</h6>
-                  <input id="recipe_cook" name="recipe_cook" type="number" placeholder="(mins)" class="form-control">
+                  <input id="recipe_cook" name="recipe_cook" type="number" placeholder="(mins)" value="{{recipe.recipe_cook}}" class="form-control">
 
                 </div>
               </div>
@@ -113,14 +130,14 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <h6>Credit</h6>
-                  <input id="recipe_credits" name="recipe_credits" type="text" placeholder="username here!" class="form-control" value="">
+                  <input id="recipe_credits" name="recipe_credits" type="text" placeholder="username here!" class="form-control" value="{{recipe.recipe_credits}}">
                 </div>
               </div>
               <!-- Recipe Credits -->      
               <div class="col-md-6">
                 <div class="form-group">
                   <h6>Recipe Image</h6>
-                  <input id="recipe_image" name="recipe_image" type="url" placeholder="Image URL" class="form-control">
+                  <input id="recipe_image" name="recipe_image" type="url" placeholder="Image URL" value="{{recipe.recipe_image}}" class="form-control">
                 </div>  
               </div> 
             </div>           
