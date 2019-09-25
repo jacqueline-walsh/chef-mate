@@ -197,15 +197,15 @@ def insert_recipe():
     recipe =  recipes_coll
     recipe.insert_one(
         {
-        "recipe_title" : request.form.get('recipe_title'),
-        "recipe_diet" : request.form.get('recipe_diet'),
+        "recipe_title" : request.form.get('recipe_title').capitalize(),
+        "recipe_diet" : request.form.get('recipe_diet').capitalize(),
         "recipe_ingredients" : request.form.getlist('recipe_ingredients'),
         "recipe_steps" : request.form.getlist('recipe_steps'),
-        "recipe_prep" : request.form.get('recipe_prep'),
-        "recipe_cook" : request.form.get('recipe_cook'),
+        "recipe_prep" : int(request.form.get('recipe_prep')),
+        "recipe_cook" : int(request.form.get('recipe_cook')),
         "recipe_difficulty" : request.form.get('recipe_difficulty'),
-        "recipe_servings" : request.form.get('recipe_servings'),
-        "recipe_cuisine" : request.form.get('recipe_cuisine'),
+        "recipe_servings" : int(request.form.get('recipe_servings')),
+        "recipe_cuisine" : request.form.get('recipe_cuisine').capitalize(),
         "recipe_credits" : request.form.get('recipe_credits'),
         "recipe_image" : request.form.get('recipe_image')
         }            
@@ -229,15 +229,15 @@ def update_recipe(recipe_id):
         {'_id': ObjectId(recipe_id)},
         {'$set':
             {           
-            "recipe_title" : request.form.get('recipe_title'),
-            "recipe_diet" : request.form.get('recipe_diet'),
+            "recipe_title" : request.form.get('recipe_title').capitalize(),
+            "recipe_diet" : request.form.get('recipe_diet').capitalize(),
             "recipe_ingredients" : request.form.getlist('recipe_ingredients'),
             "recipe_steps" : request.form.getlist('recipe_steps'),
-            "recipe_prep" : request.form.get('recipe_prep'),
-            "recipe_cook" : request.form.get('recipe_cook'),
+            "recipe_prep" : int(request.form.get('recipe_prep')),
+            "recipe_cook" : int(request.form.get('recipe_cook')),
             "recipe_difficulty" : request.form.get('recipe_difficulty'),
-            "recipe_servings" : request.form.get('recipe_servings'),
-            "recipe_cuisine" : request.form.get('recipe_cuisine'),
+            "recipe_servings" : int(request.form.get('recipe_servings')),
+            "recipe_cuisine" : request.form.get('recipe_cuisine').capitalize(),
             "recipe_credits" : request.form.get('recipe_credits'),
             "recipe_image" : request.form.get('recipe_image')
             }
