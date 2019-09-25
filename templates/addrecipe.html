@@ -6,7 +6,7 @@
 <!-- main content block -->
 {% block content %}
 <div class="content-section">
-    <form action="{{ url_for('insert_recipe') }}" method="POST" class="col">      
+    <form action="{{ url_for('insert_recipe') }}" method="POST" class="col" id="add-recipe-form">      
         <fieldset class="form-group">
             <img class="chefmate-logo"src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/chef-mate.png" alt="chef-mate-logo"/>
             <h1 class="text-center border-bottom mb-4">Add Recipe</h1>
@@ -124,7 +124,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <h6>Recipe Image</h6>
-                    <input name="recipe_image" type="url" class="form-control" placeholder="Image URL">
+                    <input name="recipe_image" type="url" class="form-control" placeholder="Image URL" id="recipe-image" >
                   </div>  
               </div> 
             </div>           

@@ -65,12 +65,12 @@ def login():
     if request.method == 'POST': 
         login_user = users_coll.find_one({'username' : request.form['username']})
 
-        if login_user:
+        if login_user is not None:
             if bcrypt.hashpw(request.form['password'].encode('utf-8'), login_user['password']) == login_user['password']:
                 session['username'] = request.form['username']
                 return redirect(url_for('index'))
-        else:
-            flash(f"Sorry username or password invalid", 'danger')   
+            else:  
+                flash(f"Sorry username or password invalid", 'danger')    
 
     return render_template('login.html')
 
@@ -131,6 +131,9 @@ Recipes
 def recipes():
     recipe = recipes_coll
 
+    the_diet = diets_coll.find()
+    the_cuisine = cuisine_coll.find()
+
     offset = int(request.args['offset'])
     limit = int(request.args['limit'])
     recipe_count = recipe.count()
@@ -148,9 +151,9 @@ def recipes():
     if 'username' in session:
         user = users_coll.find_one({"username": session['username']})
 
-        return render_template("recipes.html", recipes=recipes, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset, user_id=user['_id'])
+        return render_template("recipes.html", recipes=recipes, diets=the_diet, cuisine=the_cuisine, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset, user_id=user['_id'])
 
-    return render_template("recipes.html", recipes=recipes, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
+    return render_template("recipes.html", recipes=recipes, diets=the_diet, cuisine=the_cuisine,  recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
 
 
 # search recipes
@@ -160,6 +163,18 @@ def search_recipes():
     db_query = request.args['db_query']
     recipes = recipes_coll.find({'$text': {'$search': db_query}}).limit(6)
     return render_template("search.html", recipes=recipes)    
+
+# filter by cuisine
+@app.route('/search_cuisine/<cuisine_country>')
+def search_cuisine(cuisine_country):
+    recipes = recipes_coll.find({'recipe_cuisine' : cuisine_country})
+    return render_template("search_cuisine.html", recipes=recipes)    
+
+# filter by diet
+@app.route('/search_diet/<diet>')
+def search_diet(diet):
+    recipes = recipes_coll.find({'recipe_diet' : diet})
+    return render_template("search_diet.html", recipes=recipes)                                 
 
 # get a single recipe
 @app.route('/recipe/<recipe_id>')

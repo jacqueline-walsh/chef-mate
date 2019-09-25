@@ -74,8 +74,6 @@ function validate() {
     }
 }
 
-
-
 // widget provided by https://rating-widget.com/get/rating/
 // Ratings
 (function (d, t, e, m) {
@@ -123,3 +121,12 @@ function validate() {
 }
     (document, new Date(), "script", "rating-widget.com/")
 );
+
+// Add default recipe image if there is none
+$(document).ready(function() {
+    $("#add-recipe-form").submit(function() {           
+        if ($("#recipe-image").val()=="") {             
+            $("#recipe-image").val('https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/recipes/default-image.png');         
+        }
+    });
+ });

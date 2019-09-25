@@ -3,10 +3,33 @@
 {% block content %}
     <h1 class="mb-3 text-center">Recipes</h1>
     <hr>
-    <form class="form-inline justify-content-end search-form my-lg-0" action="{{ url_for('search_recipes') }}" >
-        <input class="form-control mr-sm-2" name="db_query" type="search" placeholder="Search recipe by title" aria-label="Search">
-        <button class="btn btn-outline-success search-form my-sm-0" type="submit">Search</button>
-    </form>
+    <div class="row mt-4">
+        <!-- filter search by country of cuisine -->
+        <div class="col-md-4 mt-2">           
+            <select id="cuisine" onchange="location = this.options[this.selectedIndex].value;" name="recipe_cuisine" required>
+                <option value="" disabled selected>Search country of cuisine</option>
+                {% for country in cuisine %}
+                <option name="recipe_cuisine" value="{{url_for( 'search_cuisine', cuisine_country=country.cuisine_country )}}">{{ country.cuisine_country }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- filter search by dietary need -->
+        <div class="col-md-4 mt-2">
+        <select id="diet"  onchange="location = this.options[this.selectedIndex].value;" name="recipe_diet" required>
+            <option value="" disabled selected>Search dietary need</option>
+            {% for diet in diets %}
+                <option value="{{ url_for( 'search_diet', diet=diet.diet_name )}}">{{ diet.diet_name }}</option>
+            {% endfor %}
+        </select>
+        </div>
+        <!-- search bar for recipes by title -->  
+        <div class="col-md-4">    
+            <form class="form-inline justify-content-end search-form my-lg-0" action="{{ url_for('search_recipes') }}" >
+                <input class="form-control mr-sm-2" name="db_query" type="search" placeholder="Search recipe by title" aria-label="Search">
+                <button class="btn btn-outline-success search-form my-sm-0" type="submit">Search</button>
+            </form>
+        </div>  
+    </div>
 	<div class="row">
         {% for recipe in recipes %}
         <div class="card col-md-4 mt-5">
