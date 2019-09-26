@@ -3,19 +3,15 @@ import os
 from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 import bcrypt
-
+import env as config
 
 
 app = Flask(__name__)
 
 
-# config for local development
-# app.config['MONGO_URI'] = config.MONGO_URI
-# app.config['SECRET_KEY'] = config.SECRET_KEY
-
 # configuration of Database
-app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+app.config['MONGO_URI'] = config.MONGO_URI
+app.config['SECRET_KEY'] = config.SECRET_KEY
 
 
 mongo = PyMongo(app)
@@ -168,18 +164,27 @@ def search_recipes():
     recipes_coll.create_index([( 'recipe_title', pymongo.TEXT )], name="text")
     db_query = request.args['db_query']
     recipes = recipes_coll.find({'$text': {'$search': db_query}}).limit(6)
+    if recipes.count() == 0:
+        flash(f'Your search returned no results.  Why don\'t you add a new recipe?', 'danger')
+        return render_template("search_diet.html")   
     return render_template("search.html", recipes=recipes)    
 
 # filter by cuisine
 @app.route('/search_cuisine/<cuisine_country>')
 def search_cuisine(cuisine_country):
     recipes = recipes_coll.find({'recipe_cuisine' : cuisine_country})
+    if recipes.count() == 0:
+        flash(f'Your search returned no results.  Why don\'t you add a new recipe?', 'danger')
+        return render_template("search_diet.html")      
     return render_template("search_cuisine.html", recipes=recipes)    
 
 # filter by diet
 @app.route('/search_diet/<diet>')
 def search_diet(diet):
     recipes = recipes_coll.find({'recipe_diet' : diet})
+    if recipes.count() == 0:
+        flash(f'Your search returned no results.  Why don\'t you add a new recipe?', 'danger')
+        return render_template("search_diet.html")  
     return render_template("search_diet.html", recipes=recipes)                                 
 
 # get a single recipe
@@ -259,8 +264,6 @@ def delete_recipe(recipe_id):
     recipes_coll.delete_one({"_id": ObjectId(recipe_id)})
     flash(f"Recipe deleted", 'success')
     return redirect(url_for('recipes', limit=6, offset=0))
-
-# search all recipes
 
 
 '''
@@ -379,11 +382,6 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-    app.run(host=os.environ.get('IP'),
-            port=os.environ.get('PORT'),
+    app.run(host=os.environ.get('IP', "0.0.0.0"),
+            port=os.environ.get('PORT', "5000"), 
             debug=False)
-
-    # Development only
-    # app.run(host=os.environ.get('IP'),
-    #         port=os.environ.get('PORT'),
-    #         debug=True)
