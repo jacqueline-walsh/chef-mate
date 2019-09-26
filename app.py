@@ -3,13 +3,14 @@ import os
 from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 import bcrypt
+import env as config
 
 
 app = Flask(__name__)
 
 # configuration of Database
-app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+app.config['MONGO_URI'] = config.MONGO_URI
+app.config['SECRET_KEY'] = config.SECRET_KEY
 
 
 mongo = PyMongo(app)
@@ -154,7 +155,6 @@ def recipes():
         return render_template("recipes.html", recipes=recipes, diets=the_diet, cuisine=the_cuisine, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset, user_id=user['_id'])
 
     return render_template("recipes.html", recipes=recipes, diets=the_diet, cuisine=the_cuisine,  recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
-
 
 # search recipes
 @app.route('/search')
@@ -380,6 +380,6 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-    app.run(host=os.environ.get('IP', "0.0.0.0"),
-            port=os.environ.get('PORT', "5000"), 
-            debug=False)
+    app.run(host=os.environ.get('IP'),
+            port=os.environ.get('PORT'), 
+            debug=True)

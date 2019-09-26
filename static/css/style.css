@@ -96,18 +96,6 @@ img.logo {
     margin-left: 20px;
 }
 
-/* general buttons */
-.btn-outline-info {
-    color: #ff0000;
-    border-color: #ff0000;
-}
-
-.btn-outline-info:hover {
-    color: #fff;
-    background-color: #ff0000;
-    border-color: #ff0000;
-}
-
 /* ************* All Recipes Section ******************** */
 
 /* recipe border */
