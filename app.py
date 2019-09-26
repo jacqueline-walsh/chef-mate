@@ -7,8 +7,8 @@ import bcrypt
 app = Flask(__name__)
 
 # configuration of Database
-app.config['MONGO_URI'] = config.MONGO_URI
-app.config['SECRET_KEY'] = config.SECRET_KEY
+app.config['MONGO_URI'] = os.environ.get("MONGO_URI")
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
 
 mongo = PyMongo(app)
