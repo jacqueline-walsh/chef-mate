@@ -3,7 +3,6 @@ import os
 from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 import bcrypt
-import env as config
 
 
 app = Flask(__name__)
