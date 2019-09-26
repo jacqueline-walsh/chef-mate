@@ -4,9 +4,7 @@ from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 import bcrypt
 
-
 app = Flask(__name__)
-
 
 # configuration of Database
 app.config['MONGO_URI'] = config.MONGO_URI
