@@ -67,7 +67,7 @@ def login():
         if login_user is not None:
             if bcrypt.hashpw(request.form['password'].encode('utf-8'), login_user['password']) == login_user['password']:
                 session['username'] = request.form['username']
-                return redirect(url_for('recipes?limit=6&offset=0'))
+                return redirect(url_for('recipes', limit=6, offset=0))
             else:  
                 flash(f"Sorry username or password invalid", 'danger')    
 
