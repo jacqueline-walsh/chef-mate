@@ -29,8 +29,6 @@ home page
 '''
 @app.route('/')
 def index():
-    if 'username' in session:
-        flash(f"You are logged in as {session['username']}", 'success')
     return render_template('index.html')
 
 
@@ -151,6 +149,7 @@ def recipes():
 
     if 'username' in session:
         user = users_coll.find_one({"username": session['username']})
+        flash(f"Welcome, you are logged in as username:  {session['username']}", 'success')
 
         return render_template("recipes.html", recipes=recipes, diets=the_diet, cuisine=the_cuisine, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset, user_id=user['_id'])
 

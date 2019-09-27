@@ -1,14 +1,14 @@
 {% extends 'layout.html' %}
 <!-- main content block -->
 {% block content %}
-    <h1 class="mb-3 text-center">Recipes</h1>
+    <h1 class="mb-3 text-center">All Recipes</h1>
     <hr>
     <div class="row text-center">
         <!-- button for my recipes -->
         {% if session.username %}
             <div class="col-md-2 mt-2 mb-4">    
-                <a href="{{ url_for('my_recipes', username=session['username'], limit=6, offset=0) }}"><img class="my_recipes" src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/my_recipes.png" alt="my recipe cook book link"></a>
-            </div> 
+                <a href="{{ url_for('my_recipes', username=session['username'], limit=6, offset=0) }}"><img class="my_recipes" src="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/my_recipes.png" alt="my recipe cook book link" data-toggle="tooltip" data-placement="right" title="Click the book to see all your favorite recipes!"></a>
+            </div>
         {% endif %}
     </div>
     <div class="row mt-4">   

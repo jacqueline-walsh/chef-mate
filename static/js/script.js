@@ -131,3 +131,8 @@ $(document).ready(function() {
         }
     });
  });
+
+//  toottip for my recipe book
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+});
