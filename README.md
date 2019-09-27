@@ -5,6 +5,8 @@
 
 This project is to provide a one stop shop for all your favourite recipes.  Users can experience a rich environment full of colourful imagery, a list of ingredients to shop for and the step by step instructions on how to make that perfect meal.  As well as being able to store and organise your own special recipes, you can check out other inspirational ideas from others and rate to give feedback.  Search for a typical dish by country, dietary need or just by recipe title. Visit the data section for a dashboard of dynamic graphs.  This is an app that you won't be able to live without!
 
+[Live link](http://chefmate-manager.herokuapp.com/)
+[Github Link](https://github.com/jacqueline-walsh/chef-mate)
  
 ## UX
 
