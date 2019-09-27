@@ -89,7 +89,7 @@ def profile():
     if 'username' in session:
         user = users_coll.find_one({"username": session['username']})
         return render_template("profile.html", user=user, user_id=user['_id'])     
-    return redirect(url_for('index'))
+    return redirect(url_for('recipes', limit=6, offset=0))
 
 
 #edit profile
