@@ -5,8 +5,8 @@
 
 This project is to provide a one stop shop for all your favourite recipes.  Users can experience a rich environment full of colourful imagery, a list of ingredients to shop for and the step by step instructions on how to make that perfect meal.  As well as being able to store and organise your own special recipes, you can check out other inspirational ideas from others and rate to give feedback.  Search for a typical dish by country, dietary need or just by recipe title. Visit the data section for a dashboard of dynamic graphs.  This is an app that you won't be able to live without!
 
-[Live link](http://chefmate-manager.herokuapp.com/)
-[Github Link](https://github.com/jacqueline-walsh/chef-mate)
+- [Live link](http://chefmate-manager.herokuapp.com/)
+- [Github Link](https://github.com/jacqueline-walsh/chef-mate)
  
 ## UX
 
@@ -115,6 +115,7 @@ Many languages, frameworks and libraries have been used on this project:
 - [bootstrap](https://getbootstrap.com/) - Bootstrap was implemented to assist with site layout and responsive design 
 - [Font Awesome](https://fontawesome.com/) - visual icons have been used from Font Awesome
 - [Google Fonts](https://fonts.google.com/) - for the typeography of the site
+- [AWS](https://aws.amazon.com/) - storage for all images so to keep the site as light as possible.  Also where possible all links are CDN
 
 ### Backend
 - [Mongo Atlas](https://www.mongodb.com/cloud/atlas) - Database and implementing of graphs for the site
@@ -136,6 +137,15 @@ Visual Studio Code was the text editor of choice for the application. The follow
 - Python - Linting, Debugging (multi-threaded, remote), Intellisense, code formatting, refactoring, unit tests, snippets, and more
 - Jinja template language support for Visual Studio Code
 - Flask snippets collections - Initially ported from PyCharm, TextMate, SublimeText and other editors/IDEs
+
+Finally, the site has been intesively user tested to ensure the following:
+
+- all links are fully functioning
+- validation on forms prompting and working correctly
+- mobile view are in good design and order
+- user experience has been enjoyable experience with no frustration of getting lost or confused
+- flash messages appear and are correctly displayed
+- data is being received and stored correctly on the database
 
 ## Deployment
 
