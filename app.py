@@ -185,8 +185,35 @@ def search_diet(diet):
         return render_template("search_diet.html")  
     return render_template("search_diet.html", recipes=recipes)                                 
 
+# get all my recipes
+@app.route('/my_recipes/<username>')
+def my_recipes(username):
+    if 'username' in session:    
+        offset = int(request.args['offset'])
+        limit = int(request.args['limit'])
+
+        starting_id = recipes_coll.find().sort('_id', pymongo.ASCENDING)
+        last_id = starting_id[offset]['_id']
+
+        username = users_coll.find_one({"username": session['username']})
+        recipes = recipes_coll.find({'recipe_credits' : session['username'], '_id' : {'$gte' : last_id}}).sort('_id', pymongo.ASCENDING).limit(limit)
+        recipe_count = recipes.count()
+      
+        output = []
+
+        next_url = '/my_recipes/' + str(session['username']) + '?limit=' + str(limit) + '&offset=' + str(offset + limit)
+        prev_url = '/my_recipes/' + str(session['username']) + '?limit=' + str(limit) + '&offset=' + str(offset - limit) 
+
+        if recipes.count() == 0: 
+            flash(f"You don\'t have any recipes yet, why not add a few of your favourites!", 'danger')
+            return render_template("my_recipes.html", recipes=recipes, username=username, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
+
+        return render_template("my_recipes.html", recipes=recipes, username=username, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
+
+    return render_template("my_recipes.html", recipes=recipes, username=username)
+
 # get a single recipe
-@app.route('/recipe/<recipe_id>')
+@app.route('/recipe/<recipe_id>/')
 def recipe(recipe_id):
     recipe=recipes_coll.find_one({'_id': ObjectId(recipe_id)})
     return render_template("recipe.html", recipe=recipe)
