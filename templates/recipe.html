@@ -5,6 +5,7 @@
   <h1 class="text-center mb-3">{{ recipe.recipe_title}}</h1>
   <hr>
   <button onclick="window.print()" class="btn btn-danger no-print">Print <i class="fa fa-print"></i></button> 
+  <a href="{{ url_for('recipes', limit=6, offset=0) }}" class="btn btn-danger">back to all Recipes</a>
   <section class="section-one">
     <div class="row">
       <div class="card col-md-6 mt-4">

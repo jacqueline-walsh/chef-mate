@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -9,13 +8,11 @@
   <link rel="shortcut icon" href="https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/favicon.ico" type="image/x-icon">
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">  
   {% block home_css%}{% endblock home_css%}
   {% block login_signup_css%}{% endblock login_signup_css%}
-  <title>Document</title>
+  <title>{{title}}</title>
 </head>
-
 <body>
   <div id="page-container">
     <div id="content-wrap">
@@ -30,7 +27,7 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}"><i class="fa fa-home"></i> home</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{url_for('recipes', limit=6, offset=0)}}"><i class="fa fa-book"></i> recipes</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{url_for('recipes', limit=6, offset=0)}}"><i class="fa fa-book"></i> all recipes</a></li>
           {% if session.username %}
             <li class="nav-item"><a class="nav-link" href="{{ url_for('add_recipe') }}"><i class="fa fa-plus"></i> add recipe</a></li>	
             <li class="nav-item"><a class="nav-link" href="{{url_for('profile') }}"><i class="fa fa-user-plus"></i> profile</a></li>     

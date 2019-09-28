@@ -213,14 +213,15 @@ span.rw-ui-dislike {
 .list-ingredients-background {
     background-image: url('https://code-institute.s3-eu-west-1.amazonaws.com/chef-mate/recipes/background-paper.png');
     background-repeat: no-repeat;
-    background-size: auto cover;
+    width: 95%;
+    height: auto;
     margin-bottom: 20px;
     padding-bottom: 20px;
     margin-top: -50px !important;
 }
 
 .list-ingredients-background > h3 {
-    margin-top: 120px;
+    margin-top: 145px;
 }
 
 .ingredients-heading, ul.ingredient-list {
@@ -237,7 +238,7 @@ ul.ingredient-list {
     width: 85%;
 }
 
-/* Receipe steps to follow  */
+/* Recipe steps to follow  */
 p.step-block.clearfix {
     margin-top: 30px;
     margin-bottom: 40px;
@@ -255,7 +256,8 @@ hr.hr-steps {
     border-color: black;
     border-width: 1px 0 0 0;
     border-radius: 20px;
-    }
+}
+
     hr.hr-steps:before {
     display: block;
     content: "";
@@ -265,7 +267,7 @@ hr.hr-steps {
     border-color: black;
     border-width: 0 0 1px 0;
     border-radius: 20px;
-    }
+}
 
 /* ************* container for login and registration pages ***************** */
 
@@ -310,7 +312,13 @@ hr.hr-steps {
 }
 
 /* ********************* media query for mobile navbar ***************************** */
-@media (max-width: 1500px) {
+@media (max-width: 767px) {
+    #select-cuisine, #select-diet, #search-title {
+        text-align: center;
+        margin-bottom: 15px;
+    }   
 
-
+    .list-ingredients-background {
+        width: 95%;
+    } 
 }

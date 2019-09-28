@@ -3,7 +3,7 @@
 {% block content %}
     <h1 class="mb-3 text-center">Recipes</h1>
     <hr>
-    <a href="{{ url_for('recipes', limit=6, offset=0) }}" class="btn btn-danger btn-sm">Recipes</a>
+    <a href="{{ url_for('recipes', limit=6, offset=0) }}" class="btn btn-danger btn-sm">back to all Recipes</a>
     </form>
 	<div class="row">
         {% for recipe in recipes %}

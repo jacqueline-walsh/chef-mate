@@ -91,7 +91,7 @@ This is a large feature page the gives an insight to what the site is all about.
 - links to create more countries for the cuisine list or add more dietry types are available.  Only admin can edit or delete cuisine and dietry fields
 
 ### Profile 
-- User can edit or delete their own profile
+- User can view their own profile details
 
 ### Logout
 - User can logout at any time
@@ -121,6 +121,7 @@ Many languages, frameworks and libraries have been used on this project:
 - [Mongo Atlas](https://www.mongodb.com/cloud/atlas) - Database and implementing of graphs for the site
 - Flask - a Python framework.  The whole application has been built on this framework
 - PyMongo - a Object Relationship Mapper (ORM) for querying the Mongodb Atlas database
+- Bcrypt - for hash of password for input to database
 
 ### Hosting
 - [Heroku](https://www.heroku.com) - the application has been hosted on heroku
@@ -130,6 +131,9 @@ Many languages, frameworks and libraries have been used on this project:
 
 Throughout the development each section / function and action was tested visually within the chrome browser to ensure that the feature was implemented correctly.  Bugs with variables were initially investigated via either a print() or by using ipdb, (to install use `$ pip3 install ipdb`) and `import ipdb; ipdb.set_trace()` placed at the source of the problem.  Both solutions output to the terminal.
 
+[W3C html Validation](https://validator.w3.org) - all html files have been validate, however errors were found due to the jinja templating
+[W3C CSS Validation](https://jigsaw.w3.org/css-validator/) - all style sheets have been validated
+
 For testing GET and POST request between the application and database [Postman](https://www.getpostman.com) 
 
 Visual Studio Code was the text editor of choice for the application. The following extensions were installed for the project to assist testing and debugging:
@@ -138,10 +142,12 @@ Visual Studio Code was the text editor of choice for the application. The follow
 - Jinja template language support for Visual Studio Code
 - Flask snippets collections - Initially ported from PyCharm, TextMate, SublimeText and other editors/IDEs
 
-Finally, the site has been intesively user tested to ensure the following:
+The site has been intensively user tested to ensure the following:
 
 - all links are fully functioning
 - validation on forms prompting and working correctly
+- registration return error message if username already in database
+- password and password confirm return match if same
 - mobile view are in good design and order
 - user experience has been enjoyable experience with no frustration of getting lost or confused
 - flash messages appear and are correctly displayed

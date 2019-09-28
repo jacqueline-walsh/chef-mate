@@ -2,10 +2,8 @@ from flask import Flask, render_template, redirect, request, url_for, flash, ses
 import os
 from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
-import bcrypt
+from flask_bcrypt import Bcrypt
 import env as config
-
-
 
 app = Flask(__name__)
 
@@ -13,6 +11,8 @@ app = Flask(__name__)
 app.config['MONGO_URI'] = config.MONGO_URI
 app.config['SECRET_KEY'] = config.SECRET_KEY
 
+
+bcrypt = Bcrypt(app)
 
 mongo = PyMongo(app)
 
@@ -30,7 +30,7 @@ home page
 '''
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', title='ChefMate - Home')
 
 
 """
@@ -43,7 +43,7 @@ def register():
         existing_user = users_coll.find_one({'username' : request.form['username']})    
 
         if existing_user is None:
-            hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+            hashpass = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
             users_coll.insert_one({
                 'firstname': request.form['firstname'].capitalize(),
                 'lastname': request.form['lastname'].capitalize(),    
@@ -52,11 +52,11 @@ def register():
                 'password': hashpass,
                 'admin': False})
             session['username'] = request.form['username']
-            return redirect(url_for('index'))
+            return redirect(url_for('recipes', limit=6, offset=0))
         else:
             flash(f"Sorry username, {request.form['username']} already exists", 'danger')
 
-    return render_template('register.html')
+    return render_template('register.html', title='ChefMate - Registration Form')
 
 
 # Login
@@ -65,14 +65,14 @@ def login():
     if request.method == 'POST': 
         login_user = users_coll.find_one({'username' : request.form['username']})
 
-        if login_user is not None:
-            if bcrypt.hashpw(request.form['password'].encode('utf-8'), login_user['password']) == login_user['password']:
+        if login_user:
+            if bcrypt.check_password_hash(login_user['password'], (request.form['password']).encode('utf-8')):
                 session['username'] = request.form['username']
                 return redirect(url_for('recipes', limit=6, offset=0))
             else:  
-                flash(f"Sorry username or password invalid", 'danger')    
-
-    return render_template('login.html')
+                flash(f"Sorry username or password invalid", 'danger')  
+ 
+    return render_template('login.html', title='ChefMate - Login Form')
 
 
 # logout
@@ -89,38 +89,8 @@ def logout():
 def profile():
     if 'username' in session:
         user = users_coll.find_one({"username": session['username']})
-        return render_template("profile.html", user=user, user_id=user['_id'])     
+        return render_template("profile.html", user=user, user_id=user['_id'], title='ChefMate - Profile')     
     return redirect(url_for('recipes', limit=6, offset=0))
-
-
-#edit profile
-@app.route('/edit_profile/<user_id>')
-def edit_profile(user_id):
-    return render_template('editprofile.html', user=users_coll.find_one({'_id': ObjectId(user_id)}))
-
-
-# update profile in db
-@app.route('/update_profile/<user_id>', methods=['POST'])
-def update_profile(user_id):
-    hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
-    users_coll.replace_one(
-        {'_id': ObjectId(user_id)},
-        {'firstname': request.form['firstname'].capitalize(),
-        'lastname': request.form['lastname'].capitalize(),
-        'username': request.form['username'],
-        'email': request.form['email'],
-        'password': hashpass})
-    flash(f'Your profile has been updated', 'success')        
-    return redirect(url_for('profile'))
-
-
-# delete profile from db
-@app.route('/delete_profile/<user_id>')
-def delete_profile(user_id):
-    users_coll.delete_one({"_id": ObjectId(user_id)})
-    session.clear()
-    flash(f'Your profile has now been deleted', 'success')
-    return redirect(url_for('profile'))
 
 '''
 Recipes
@@ -152,9 +122,9 @@ def recipes():
         user = users_coll.find_one({"username": session['username']})
         flash(f"Welcome, you are logged in as username:  {session['username']}", 'success')
 
-        return render_template("recipes.html", recipes=recipes, diets=the_diet, cuisine=the_cuisine, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset, user_id=user['_id'])
+        return render_template("recipes.html", title='ChefMate - All Recipes', recipes=recipes, diets=the_diet, cuisine=the_cuisine, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset, user_id=user['_id'])
 
-    return render_template("recipes.html", recipes=recipes, diets=the_diet, cuisine=the_cuisine,  recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
+    return render_template("recipes.html", title='ChefMate - All Recipes', recipes=recipes, diets=the_diet, cuisine=the_cuisine,  recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
 
 # search recipes
 @app.route('/search')
@@ -165,7 +135,7 @@ def search_recipes():
     if recipes.count() == 0:
         flash(f'Your search returned no results.  Why don\'t you add a new recipe?', 'danger')
         return render_template("search_diet.html")   
-    return render_template("search.html", recipes=recipes)    
+    return render_template("search.html", recipes=recipes, title='ChefMate - Search Recipes', )    
 
 # filter by cuisine
 @app.route('/search_cuisine/<cuisine_country>')
@@ -174,7 +144,7 @@ def search_cuisine(cuisine_country):
     if recipes.count() == 0:
         flash(f'Your search returned no results.  Why don\'t you add a new recipe?', 'danger')
         return render_template("search_diet.html")      
-    return render_template("search_cuisine.html", recipes=recipes)    
+    return render_template("search_cuisine.html", recipes=recipes, title='ChefMate - Search Cuisine')    
 
 # filter by diet
 @app.route('/search_diet/<diet>')
@@ -183,7 +153,7 @@ def search_diet(diet):
     if recipes.count() == 0:
         flash(f'Your search returned no results.  Why don\'t you add a new recipe?', 'danger')
         return render_template("search_diet.html")  
-    return render_template("search_diet.html", recipes=recipes)                                 
+    return render_template("search_diet.html", recipes=recipes, title='ChefMate - Search Diet')                                 
 
 # get all my recipes
 @app.route('/my_recipes/<username>')
@@ -208,15 +178,15 @@ def my_recipes(username):
             flash(f"You don\'t have any recipes yet, why not add a few of your favourites!", 'danger')
             return render_template("my_recipes.html", recipes=recipes, username=username, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
 
-        return render_template("my_recipes.html", recipes=recipes, username=username, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset)
+        return render_template("my_recipes.html", recipes=recipes, username=username, recipe_count=recipe_count, next_url=next_url, prev_url=prev_url, limit=limit, offset=offset, title='ChefMate - My Recipes')
 
-    return render_template("my_recipes.html", recipes=recipes, username=username)
+    return render_template("my_recipes.html", recipes=recipes, username=username, title='ChefMate - My Recipes')
 
 # get a single recipe
 @app.route('/recipe/<recipe_id>/')
 def recipe(recipe_id):
     recipe=recipes_coll.find_one({'_id': ObjectId(recipe_id)})
-    return render_template("recipe.html", recipe=recipe)
+    return render_template("recipe.html", recipe=recipe, title='ChefMate - Recipe')
 
 # add recipe
 @app.route('/add_recipe/')
@@ -225,7 +195,7 @@ def add_recipe():
     the_cuisine = cuisine_coll.find()
     the_difficulty = difficulty_coll.find()
     return render_template('addrecipe.html',
-                           diets=the_diet, cuisine=the_cuisine, difficulty=the_difficulty)
+                           diets=the_diet, cuisine=the_cuisine, difficulty=the_difficulty, title='ChefMate - Add Recipe')
 
 # insert recipe to db
 @app.route('/insert_recipe', methods=['POST'])
@@ -256,7 +226,7 @@ def edit_recipe(recipe_id):
     the_diet = diets_coll.find()
     the_cuisine = cuisine_coll.find()
     the_difficulty = difficulty_coll.find()
-    return render_template('editrecipe.html', recipe=recipe, diets=the_diet, cuisine=the_cuisine, difficulty=the_difficulty)
+    return render_template('editrecipe.html', recipe=recipe, diets=the_diet, cuisine=the_cuisine, difficulty=the_difficulty, title='ChefMate - Edit Recipe')
 
 # update recipe in db
 @app.route('/update_recipes/<recipe_id>', methods=['POST'])
@@ -298,12 +268,12 @@ Diets
 # get all diets
 @app.route('/diets')
 def diets():
-    return render_template('diets.html', diets=diets_coll.find())
+    return render_template('diets.html', diets=diets_coll.find(), title='ChefMate - Diets')
 
 # add diet
 @app.route('/add_diet')
 def add_diet():
-    return render_template('adddiet.html')
+    return render_template('adddiet.html', title='ChefMate - Add Diet')
 
 # insert diet to db
 @app.route('/insert_diet', methods=['POST'])
@@ -318,7 +288,7 @@ def insert_diet():
 @app.route('/edit_diet/<diet_id>')
 def edit_diet(diet_id):
     return render_template('editdiet.html', diet=diets_coll.find_one(
-    {'_id': ObjectId(diet_id)}))
+    {'_id': ObjectId(diet_id)}), title='ChefMate - Edit Diet')
 
 # update diet in db
 @app.route('/update_diet/<diet_id>', methods=['POST'])
@@ -344,12 +314,12 @@ Cuisine
 # get all cuisine
 @app.route('/cuisine')
 def cuisine():
-    return render_template('cuisine.html', cuisine=cuisine_coll.find())
+    return render_template('cuisine.html', cuisine=cuisine_coll.find(), title='ChefMate - Cuisine')
 
 # add cuisine
 @app.route('/add_cuisine')
 def add_cuisine():
-    return render_template('addcuisine.html')
+    return render_template('addcuisine.html', title='ChefMate - Add Cuisine')
 
 
 # insert cuisine to db
@@ -366,7 +336,7 @@ def insert_cuisine():
 @app.route('/edit_cuisine/<cuisine_id>')
 def edit_cuisine(cuisine_id):
     return render_template('editcuisine.html', cuisine=cuisine_coll.find_one(
-    {'_id': ObjectId(cuisine_id)}))
+    {'_id': ObjectId(cuisine_id)}), title='ChefMate - Edit Cuisine')
 
 
 # update cuisine in db
@@ -394,7 +364,7 @@ Dashboard Page
 # dashboard for d3.js charts
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', title='ChefMate - Dashboard')
 
 '''
 Error page
@@ -403,7 +373,7 @@ Error page
 # 404 page
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('404.html', title='ChefMate - 404'), 404
 
 
 if __name__ == '__main__':
