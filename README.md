@@ -197,7 +197,6 @@ SECRET_KEY | SECRET_KEY |
 
 ## Credits
 
-- [hr for steps](https://www.formget.com/css-hr/)
 - [Ratings on recipe page](https://rating-widget.com/)
 
 ### Content
