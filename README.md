@@ -174,7 +174,7 @@ SECRET_KEY | SECRET_KEY |
     - $ heroku login
     - $ git add .
     - $ git commit -m "message for deployment"
-    - $ $ git push heroku master
+    - $ git push heroku master
 - Heroku then launches the application and provides a link to the new live site
 - Go to heroku and select more tab in top right and click on Restart All Dynos
 - Select tab to Open app in browser next to more tab.
